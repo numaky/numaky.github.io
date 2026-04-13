@@ -4,13 +4,12 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Lucky Numbers Calculator — Free Numerology Reading | Name & Birth Date</title>
-  <meta name="description" content="Discover your lucky numbers, life path, destiny, soul urge & ruling planet instantly. Free numerology calculator using your name & birth date. Beautiful, detailed, shareable reading." />
-  <meta name="keywords" content="lucky numbers calculator, numerology, life path number, destiny number, lucky number by name and date of birth, free numerology reading" />
+  <meta name="description" content="Discover your lucky numbers, friendly numbers, enemy numbers, lucky colors & days instantly. Free Chaldean numerology calculator using your name. Date of birth optional." />
+  <meta name="keywords" content="lucky numbers calculator, numerology, chaldean numerology, lucky number by name, lucky number by date of birth, friendly numbers, enemy numbers, free numerology reading" />
   <link rel="canonical" href="https://numaky.github.io/" />
 
-  <!-- Open Graph for Social Sharing (viral traffic) -->
   <meta property="og:title" content="Find Your Lucky Numbers – Free Numerology Calculator" />
-  <meta property="og:description" content="Discover your Life Path, Lucky Numbers, Ruling Planet & more. Free, instant, beautiful." />
+  <meta property="og:description" content="Discover your Lucky Numbers, Friendly Numbers, Ruling Planet & more. Free, instant, beautiful." />
   <meta property="og:image" content="https://numaky.github.io/og-preview.png" />
   <meta property="og:url" content="https://numaky.github.io/" />
   <meta name="twitter:card" content="summary_large_image" />
@@ -18,7 +17,6 @@
   <!-- Google AdSense — replace ca-pub-XXXXXXXXXXXXXXXX with your publisher ID -->
   <!-- <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-XXXXXXXXXXXXXXXX" crossorigin="anonymous"></script> -->
 
-  <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700;900&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
@@ -35,6 +33,7 @@
       --gold-dk:  #8a6a1f;
       --teal:     #4ecdc4;
       --violet:   #9b72cf;
+      --rose:     #e07fa0;
       --text:     #e8e4dc;
       --muted:    #8a8499;
       --radius:   16px;
@@ -42,9 +41,7 @@
     }
 
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
     html { scroll-behavior: smooth; }
-
     body {
       font-family: 'DM Sans', sans-serif;
       background: var(--bg);
@@ -57,13 +54,10 @@
     #stars { position: fixed; inset: 0; z-index: 0; pointer-events: none; opacity: 0.6; }
 
     /* ── LAYOUT ── */
-    .wrapper { position: relative; z-index: 1; max-width: 860px; margin: 0 auto; padding: 0 20px 80px; }
+    .wrapper { position: relative; z-index: 1; max-width: 880px; margin: 0 auto; padding: 0 20px 80px; }
 
     /* ── HEADER ── */
-    header {
-      text-align: center;
-      padding: 60px 0 36px;
-    }
+    header { text-align: center; padding: 60px 0 36px; }
     .logo-icon { font-size: 52px; display: block; margin-bottom: 12px; filter: drop-shadow(0 0 18px var(--gold)); animation: pulse 3s ease-in-out infinite; }
     @keyframes pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:.7;transform:scale(1.06)} }
 
@@ -86,18 +80,14 @@
       letter-spacing: 0.03em;
     }
 
-    /* ── AD SLOT TOP ── */
+    /* ── AD SLOT ── */
     .ad-slot {
-      width: 100%;
-      min-height: 90px;
+      width: 100%; min-height: 90px;
       background: rgba(255,255,255,0.02);
       border: 1px dashed rgba(200,170,100,0.15);
       border-radius: 8px;
       display: flex; align-items: center; justify-content: center;
-      color: var(--muted);
-      font-size: 0.75rem;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
+      color: var(--muted); font-size: 0.75rem; letter-spacing: 0.08em; text-transform: uppercase;
       margin: 20px 0;
     }
     .ad-slot.tall { min-height: 250px; }
@@ -125,6 +115,19 @@
     @media(max-width:540px){ .form-grid { grid-template-columns: 1fr; } }
 
     label { display: block; font-size: 0.8rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); margin-bottom: 8px; }
+    .optional-badge {
+      display: inline-block;
+      font-size: 0.65rem;
+      letter-spacing: 0.06em;
+      background: rgba(201,168,76,0.1);
+      border: 1px solid rgba(201,168,76,0.25);
+      border-radius: 20px;
+      padding: 2px 8px;
+      color: var(--gold);
+      margin-left: 8px;
+      vertical-align: middle;
+      text-transform: none;
+    }
     input[type="text"], input[type="date"], select {
       width: 100%;
       background: rgba(255,255,255,0.04);
@@ -143,6 +146,18 @@
       box-shadow: 0 0 0 3px rgba(201,168,76,0.12);
     }
     input[type="date"]::-webkit-calendar-picker-indicator { filter: invert(0.7) sepia(1) saturate(2) hue-rotate(10deg); cursor: pointer; }
+
+    .form-note {
+      margin-top: 14px;
+      padding: 12px 16px;
+      background: rgba(201,168,76,0.06);
+      border: 1px solid rgba(201,168,76,0.15);
+      border-radius: 10px;
+      font-size: 0.82rem;
+      color: var(--muted);
+      line-height: 1.55;
+    }
+    .form-note span { color: var(--gold); }
 
     .btn-calculate {
       width: 100%;
@@ -163,7 +178,7 @@
     .btn-calculate:hover { transform: translateY(-2px); box-shadow: 0 8px 36px rgba(201,168,76,0.45); }
     .btn-calculate:active { transform: translateY(0); }
 
-    /* ── RESULTS SECTION ── */
+    /* ── RESULTS ── */
     #results { display: none; animation: fadeUp .6s ease forwards; }
     @keyframes fadeUp { from{opacity:0;transform:translateY(30px)} to{opacity:1;transform:translateY(0)} }
 
@@ -183,13 +198,9 @@
     .num-card::before { content:''; position:absolute; inset:0; background: radial-gradient(circle at 50% 0, rgba(201,168,76,0.08), transparent 70%); }
     .num-card .big-n {
       font-family: 'Cinzel Decorative', serif;
-      font-size: 2.8rem;
-      font-weight: 900;
-      line-height: 1;
+      font-size: 2.8rem; font-weight: 900; line-height: 1;
       background: linear-gradient(135deg, var(--gold-lt), var(--gold));
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
       margin-bottom: 6px;
     }
     .num-card .num-label { font-size: 0.68rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--muted); }
@@ -197,7 +208,7 @@
     .num-card.highlight { border-color: rgba(201,168,76,0.5); box-shadow: 0 0 30px rgba(201,168,76,0.12); }
     .num-card.highlight .big-n { font-size: 3.6rem; }
 
-    /* ── PROFILE ROW ── */
+    /* ── INFO BLOCKS ── */
     .profile-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
     @media(max-width:500px){ .profile-row { grid-template-columns: 1fr; } }
 
@@ -223,11 +234,10 @@
     }
     .swatch-dot { width: 18px; height: 18px; border-radius: 50%; border: 1.5px solid rgba(255,255,255,0.15); }
 
-    /* ── MEANING SECTION ── */
+    /* ── MEANING TEXT ── */
     .meaning-text {
       font-family: 'Cormorant Garamond', serif;
-      font-size: 1.1rem;
-      line-height: 1.75;
+      font-size: 1.1rem; line-height: 1.75;
       color: rgba(232,228,220,0.85);
       font-style: italic;
     }
@@ -236,17 +246,53 @@
     /* ── LUCKY DAYS PILLS ── */
     .day-pills { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 10px; }
     .day-pill {
-      padding: 6px 16px;
-      border-radius: 30px;
-      font-size: 0.8rem;
-      font-weight: 500;
-      letter-spacing: 0.05em;
-      border: 1px solid;
+      padding: 6px 16px; border-radius: 30px;
+      font-size: 0.8rem; font-weight: 500; letter-spacing: 0.05em; border: 1px solid;
     }
     .day-pill.active { background: rgba(201,168,76,0.15); border-color: var(--gold); color: var(--gold-lt); }
     .day-pill.inactive { background: transparent; border-color: rgba(255,255,255,0.08); color: var(--muted); }
 
-    /* ── GEMSTONE / AFFILIATE ── */
+    /* ── LUCKY DATES ── */
+    .date-pills { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 10px; }
+    .date-pill {
+      width: 40px; height: 40px;
+      display: flex; align-items: center; justify-content: center;
+      border-radius: 10px;
+      font-family: 'Cinzel Decorative', serif;
+      font-size: 0.85rem;
+      font-weight: 700;
+      background: rgba(201,168,76,0.1);
+      border: 1px solid rgba(201,168,76,0.35);
+      color: var(--gold-lt);
+      transition: transform .15s;
+    }
+    .date-pill:hover { transform: scale(1.1); }
+
+    /* ── FRIENDLY / ENEMY NUMBERS ── */
+    .fn-grid { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 10px; }
+    .fn-num {
+      width: 44px; height: 44px;
+      display: flex; align-items: center; justify-content: center;
+      border-radius: 10px;
+      font-family: 'Cinzel Decorative', serif;
+      font-size: 1rem; font-weight: 700;
+      transition: transform .15s;
+      cursor: default;
+      position: relative;
+    }
+    .fn-num:hover { transform: scale(1.12); }
+    .fn-friendly { background: rgba(78,205,196,0.12); border: 1px solid rgba(78,205,196,0.4); color: var(--teal); }
+    .fn-neutral  { background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.1); color: var(--muted); }
+    .fn-enemy    { background: rgba(255,80,80,0.07); border: 1px solid rgba(255,80,80,0.25); color: #ff6b6b; }
+
+    .fn-legend { display: flex; gap: 14px; flex-wrap: wrap; font-size: 0.75rem; color: var(--muted); margin-top: 14px; }
+    .fn-legend span { display: flex; align-items: center; gap: 6px; }
+    .fn-dot { width: 10px; height: 10px; border-radius: 3px; display: inline-block; }
+    .fn-dot.friendly { background: var(--teal); }
+    .fn-dot.neutral  { background: var(--muted); }
+    .fn-dot.enemy    { background: #ff6b6b; }
+
+    /* ── GEMSTONE ── */
     .gem-card {
       display: flex; align-items: center; gap: 20px;
       background: linear-gradient(135deg, rgba(78,205,196,0.06), rgba(155,114,207,0.06));
@@ -258,59 +304,13 @@
     .gem-info .gem-name { font-family: 'Cinzel Decorative', serif; font-size: 1rem; color: var(--teal); margin-bottom: 4px; }
     .gem-info .gem-desc { font-size: 0.85rem; color: var(--muted); line-height: 1.5; }
     .gem-btn {
-      margin-top: 10px;
-      display: inline-block;
+      margin-top: 10px; display: inline-block;
       padding: 7px 18px;
-      background: rgba(78,205,196,0.12);
-      border: 1px solid rgba(78,205,196,0.35);
-      border-radius: 20px;
-      color: var(--teal);
-      font-size: 0.78rem;
-      text-decoration: none;
-      letter-spacing: 0.06em;
-      transition: background .2s;
+      background: rgba(78,205,196,0.12); border: 1px solid rgba(78,205,196,0.35);
+      border-radius: 20px; color: var(--teal); font-size: 0.78rem;
+      text-decoration: none; letter-spacing: 0.06em; transition: background .2s;
     }
     .gem-btn:hover { background: rgba(78,205,196,0.22); }
-
-    /* ── SHARE ── */
-    .share-row { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 6px; }
-    .share-btn {
-      flex: 1; min-width: 120px;
-      padding: 12px 20px;
-      border-radius: 10px;
-      border: 1px solid;
-      font-size: 0.82rem;
-      font-weight: 500;
-      cursor: pointer;
-      transition: all .2s;
-      text-align: center;
-      background: transparent;
-      color: var(--text);
-    }
-    .share-btn.twitter { border-color: rgba(29,161,242,0.4); color: #1da1f2; }
-    .share-btn.twitter:hover { background: rgba(29,161,242,0.1); }
-    .share-btn.whatsapp { border-color: rgba(37,211,102,0.4); color: #25d366; }
-    .share-btn.whatsapp:hover { background: rgba(37,211,102,0.1); }
-    .share-btn.copy { border-color: var(--border); }
-    .share-btn.copy:hover { background: rgba(255,255,255,0.05); }
-
-    /* ── COMPATIBILITY GRID ── */
-    .compat-grid { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 10px; }
-    .compat-num {
-      width: 44px; height: 44px;
-      display: flex; align-items: center; justify-content: center;
-      border-radius: 10px;
-      font-family: 'Cinzel Decorative', serif;
-      font-size: 1rem;
-      font-weight: 700;
-      transition: transform .15s;
-      cursor: default;
-    }
-    .compat-num:hover { transform: scale(1.12); }
-    .compat-best { background: rgba(201,168,76,0.2); border: 1px solid var(--gold); color: var(--gold-lt); }
-    .compat-good { background: rgba(78,205,196,0.1); border: 1px solid rgba(78,205,196,0.4); color: var(--teal); }
-    .compat-neutral { background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.1); color: var(--muted); }
-    .compat-avoid { background: rgba(255,80,80,0.07); border: 1px solid rgba(255,80,80,0.25); color: #ff6b6b; }
 
     /* ── PERSONAL YEAR BANNER ── */
     .year-banner {
@@ -322,40 +322,38 @@
     }
     .year-num-big {
       font-family: 'Cinzel Decorative', serif;
-      font-size: 3rem;
-      font-weight: 900;
-      color: var(--violet);
-      line-height: 1;
-      flex-shrink: 0;
+      font-size: 3rem; font-weight: 900;
+      color: var(--violet); line-height: 1; flex-shrink: 0;
     }
     .year-text .year-title { font-family: 'Cinzel Decorative', serif; font-size: 0.85rem; color: var(--violet); margin-bottom: 5px; }
     .year-text p { font-size: 0.87rem; color: var(--muted); line-height: 1.55; }
 
-    /* ── DISCLAIMER / FOOTER ── */
-    footer {
-      text-align: center;
-      padding: 30px 0 10px;
-      font-size: 0.78rem;
-      color: var(--muted);
-      line-height: 1.6;
-      border-top: 1px solid rgba(255,255,255,0.05);
+    /* ── ZODIAC BADGE ── */
+    .zodiac-badge {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: rgba(201,168,76,0.08);
+      border: 1px solid var(--border);
+      border-radius: 30px;
+      padding: 6px 14px; font-size: 0.85rem; margin-top: 8px;
     }
-    footer a { color: var(--gold); text-decoration: none; }
-    footer a:hover { text-decoration: underline; }
+    .zodiac-badge .zb-icon { font-size: 1.4rem; }
 
-    /* ── PULSE LOADER ── */
-    #loader { display: none; text-align: center; padding: 30px; }
-    .loader-ring {
-      width: 50px; height: 50px;
-      border: 3px solid rgba(201,168,76,0.15);
-      border-top-color: var(--gold);
-      border-radius: 50%;
-      margin: 0 auto 12px;
-      animation: spin 1s linear infinite;
+    /* ── SHARE ── */
+    .share-row { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 6px; }
+    .share-btn {
+      flex: 1; min-width: 120px;
+      padding: 12px 20px; border-radius: 10px; border: 1px solid;
+      font-size: 0.82rem; font-weight: 500; cursor: pointer;
+      transition: all .2s; text-align: center; background: transparent; color: var(--text);
     }
-    @keyframes spin { to { transform: rotate(360deg); } }
+    .share-btn.twitter { border-color: rgba(29,161,242,0.4); color: #1da1f2; }
+    .share-btn.twitter:hover { background: rgba(29,161,242,0.1); }
+    .share-btn.whatsapp { border-color: rgba(37,211,102,0.4); color: #25d366; }
+    .share-btn.whatsapp:hover { background: rgba(37,211,102,0.1); }
+    .share-btn.copy { border-color: var(--border); }
+    .share-btn.copy:hover { background: rgba(255,255,255,0.05); }
 
-    /* ── SECTION DIVIDER ── */
+    /* ── DIVIDER ── */
     .divider { display: flex; align-items: center; gap: 14px; margin: 8px 0 22px; }
     .divider::before, .divider::after { content:''; flex:1; height:1px; background: var(--border); }
     .divider span { font-family:'Cinzel Decorative',serif; font-size:0.7rem; color:var(--gold); letter-spacing:0.15em; white-space:nowrap; }
@@ -365,22 +363,43 @@
     .tooltip-wrap .tt {
       display: none; position: absolute; bottom: calc(100% + 8px); left: 50%; transform: translateX(-50%);
       background: #1c2035; border: 1px solid var(--border); border-radius: 8px; padding: 8px 12px;
-      font-size: 0.78rem; color: var(--text); width: 200px; text-align: center; z-index: 10;
+      font-size: 0.78rem; color: var(--text); width: 140px; text-align: center; z-index: 10;
       box-shadow: 0 4px 20px rgba(0,0,0,0.5);
     }
     .tooltip-wrap:hover .tt { display: block; }
 
-    /* ── CHINESE ZODIAC BADGE ── */
-    .zodiac-badge {
-      display: inline-flex; align-items: center; gap: 8px;
-      background: rgba(201,168,76,0.08);
-      border: 1px solid var(--border);
-      border-radius: 30px;
-      padding: 6px 14px;
-      font-size: 0.85rem;
-      margin-top: 8px;
+    /* ── DISCLAIMER / FOOTER ── */
+    footer {
+      text-align: center; padding: 30px 0 10px;
+      font-size: 0.78rem; color: var(--muted); line-height: 1.6;
+      border-top: 1px solid rgba(255,255,255,0.05);
     }
-    .zodiac-badge .zb-icon { font-size: 1.4rem; }
+    footer a { color: var(--gold); text-decoration: none; }
+    footer a:hover { text-decoration: underline; }
+
+    /* ── LOADER ── */
+    #loader { display: none; text-align: center; padding: 30px; }
+    .loader-ring {
+      width: 50px; height: 50px;
+      border: 3px solid rgba(201,168,76,0.15);
+      border-top-color: var(--gold);
+      border-radius: 50%; margin: 0 auto 12px;
+      animation: spin 1s linear infinite;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    /* ── CAUTION BOX ── */
+    .caution-box {
+      margin-top: 18px;
+      padding: 14px 18px;
+      background: rgba(155,114,207,0.06);
+      border: 1px solid rgba(155,114,207,0.2);
+      border-radius: 10px;
+      font-size: 0.82rem;
+      color: var(--muted);
+      line-height: 1.6;
+    }
+    .caution-box strong { color: var(--violet); }
 
     /* ── RESPONSIVE ── */
     @media(max-width:480px){
@@ -391,27 +410,24 @@
 </head>
 <body>
 
-<!-- Star field -->
 <canvas id="stars"></canvas>
 
 <div class="wrapper">
 
-  <!-- ═══ HEADER ═══ -->
+  <!-- HEADER -->
   <header>
     <span class="logo-icon">✦</span>
     <h1>Lucky Numbers &amp; Numerology</h1>
-    <p class="subtitle">Uncover the numbers the universe assigned to you at birth</p>
+    <p class="subtitle">Uncover the numbers the universe assigned to you</p>
   </header>
 
-  <!-- ═══ AD SLOT — TOP BANNER ═══ -->
+  <!-- AD SLOT TOP -->
   <div class="ad-slot" id="ad-top">
-    <!-- Google AdSense Banner 728×90 or Responsive -->
-    <!-- <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-XXXXXXXXXXXXXXXX" data-ad-slot="XXXXXXXXXX" data-ad-format="auto" data-full-width-responsive="true"></ins>
-    <script>(adsbygoogle = window.adsbygoogle || []).push({});</script> -->
+    <!-- <ins class="adsbygoogle" ...></ins> -->
     <span>Advertisement</span>
   </div>
 
-  <!-- ═══ CALCULATOR FORM ═══ -->
+  <!-- FORM -->
   <div class="card">
     <div class="card-title">✦ Enter Your Details</div>
     <div class="form-grid">
@@ -420,82 +436,102 @@
         <input type="text" id="fullname" placeholder="e.g. John Michael Smith" autocomplete="off" />
       </div>
       <div>
-        <label for="dob">Date of Birth</label>
+        <label for="dob">Date of Birth <span class="optional-badge">Optional</span></label>
         <input type="date" id="dob" />
       </div>
     </div>
+    <div class="form-note">
+      <span>✦ Name is required.</span> Date of birth is optional — if provided, your Life Path, Personal Year, and Zodiac signs will also be revealed.
+    </div>
     <button class="btn-calculate" onclick="calculate()">✦ Reveal My Numbers ✦</button>
+    <div class="caution-box">
+      <strong>Caution:</strong> Do not change your name depending on this calculator. There are various systems of Numerology which should be considered along with individual letter meanings and karmic numbers. This calculator uses the ancient Chaldean numerology system.
+    </div>
   </div>
 
-  <!-- ═══ LOADER ═══ -->
+  <!-- LOADER -->
   <div id="loader">
     <div class="loader-ring"></div>
     <p style="color:var(--muted);font-size:.85rem;letter-spacing:.08em;">Reading the cosmic vibrations…</p>
   </div>
 
-  <!-- ═══ RESULTS ═══ -->
+  <!-- RESULTS -->
   <div id="results">
 
-    <!-- BIG NUMBERS GRID -->
+    <!-- CORE NUMBERS -->
     <div class="card">
       <div class="card-title">✦ Your Core Numerology Numbers</div>
       <div class="big-numbers-grid" id="numGrid"></div>
     </div>
 
-    <!-- AD SLOT — MID PAGE -->
+    <!-- AD MID -->
     <div class="ad-slot" id="ad-mid">
-      <!-- <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-XXXXXXXXXXXXXXXX" data-ad-slot="XXXXXXXXXX" data-ad-format="auto" data-full-width-responsive="true"></ins>
-      <script>(adsbygoogle = window.adsbygoogle || []).push({});</script> -->
+      <!-- <ins class="adsbygoogle" ...></ins> -->
       <span>Advertisement</span>
     </div>
 
-    <!-- LIFE PATH MEANING -->
+    <!-- NAME MEANING -->
     <div class="card">
-      <div class="card-title">✦ Your Life Path Meaning</div>
-      <p class="meaning-text" id="lifepathMeaning"></p>
+      <div class="card-title">✦ Hidden Meaning of Your Name</div>
+      <p class="meaning-text" id="nameMeaning"></p>
     </div>
 
-    <!-- PLANET, ZODIAC, ELEMENT -->
+    <!-- FRIENDLY & ENEMY NUMBERS -->
     <div class="card">
-      <div class="card-title">✦ Cosmic Profile</div>
-      <div class="profile-row" id="profileRow"></div>
-    </div>
-
-    <!-- PERSONAL YEAR NUMBER -->
-    <div class="card">
-      <div class="card-title">✦ Your Personal Year <span id="currentYear"></span></div>
-      <div class="year-banner" id="yearBanner"></div>
-    </div>
-
-    <!-- LUCKY COLORS & DAYS -->
-    <div class="card">
-      <div class="card-title">✦ Lucky Colors &amp; Days</div>
-      <div class="divider"><span>Colors</span></div>
-      <div class="color-row" id="colorRow"></div>
-      <div class="divider" style="margin-top:22px"><span>Days of the Week</span></div>
-      <div class="day-pills" id="dayPills"></div>
-    </div>
-
-    <!-- COMPATIBILITY -->
-    <div class="card">
-      <div class="card-title">✦ Number Compatibility</div>
-      <p style="font-size:.85rem;color:var(--muted);margin-bottom:4px;">How each number 1–9 vibes with your Life Path</p>
-      <div class="compat-grid" id="compatGrid"></div>
-      <div style="margin-top:14px;display:flex;gap:10px;flex-wrap:wrap;font-size:.75rem;color:var(--muted)">
-        <span>🟡 Best match</span><span>🟢 Good</span><span>⚪ Neutral</span><span>🔴 Avoid</span>
+      <div class="card-title">✦ Friendly &amp; Enemy Numbers</div>
+      <p style="font-size:.85rem;color:var(--muted);margin-bottom:4px;">Numbers that vibrate in harmony or conflict with your name number</p>
+      <div class="fn-grid" id="fnGrid"></div>
+      <div class="fn-legend">
+        <span><span class="fn-dot friendly"></span> Friendly</span>
+        <span><span class="fn-dot neutral"></span> Neutral</span>
+        <span><span class="fn-dot enemy"></span> Enemy</span>
       </div>
     </div>
 
-    <!-- GEMSTONE AFFILIATE CARD -->
+    <!-- LUCKY COLORS & DAYS & DATES -->
+    <div class="card">
+      <div class="card-title">✦ Lucky Colors, Days &amp; Dates</div>
+      <div class="divider"><span>Lucky Colors</span></div>
+      <div class="color-row" id="colorRow"></div>
+      <div class="divider" style="margin-top:22px"><span>Lucky Days</span></div>
+      <div class="day-pills" id="dayPills"></div>
+      <div class="divider" style="margin-top:22px"><span>Lucky Dates of the Month</span></div>
+      <div class="date-pills" id="datePills"></div>
+    </div>
+
+    <!-- RULING PLANET / ELEMENT -->
+    <div class="card">
+      <div class="card-title">✦ Ruling Planet &amp; Element</div>
+      <div class="profile-row" id="planetRow"></div>
+    </div>
+
+    <!-- GEMSTONE -->
     <div class="card">
       <div class="card-title">✦ Your Power Gemstone</div>
       <div class="gem-card" id="gemCard"></div>
     </div>
 
-    <!-- AD SLOT — NATIVE / LARGE -->
+    <!-- DOB-DEPENDENT: LIFE PATH -->
+    <div class="card" id="lifepathCard" style="display:none">
+      <div class="card-title">✦ Your Life Path Number</div>
+      <p class="meaning-text" id="lifepathMeaning"></p>
+    </div>
+
+    <!-- DOB-DEPENDENT: PERSONAL YEAR -->
+    <div class="card" id="yearCard" style="display:none">
+      <div class="card-title">✦ Your Personal Year <span id="currentYear"></span></div>
+      <div class="year-banner" id="yearBanner"></div>
+    </div>
+
+    <!-- DOB-DEPENDENT: ZODIAC -->
+    <div class="card" id="zodiacCard" style="display:none">
+      <div class="card-title">✦ Your Zodiac Signs</div>
+      <div class="profile-row" id="zodiacRow"></div>
+    </div>
+
+    <!-- AD BOTTOM -->
     <div class="ad-slot tall" id="ad-bottom">
-      <!-- <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-XXXXXXXXXXXXXXXX" data-ad-slot="XXXXXXXXXX" data-ad-format="auto" data-full-width-responsive="true"></ins>
-      <script>(adsbygoogle = window.adsbygoogle || []).push({});</script> -->
+      <!-- <ins class="adsbygoogle" ...></ins> -->
       <span>Advertisement</span>
     </div>
 
@@ -512,45 +548,44 @@
 
   </div><!-- /results -->
 
-  <!-- ═══ SEO CONTENT SECTION ═══ -->
+  <!-- SEO CONTENT -->
   <div class="card" style="margin-top:40px">
     <div class="card-title">✦ How Are Lucky Numbers Calculated?</div>
     <div style="font-family:'Cormorant Garamond',serif;font-size:1.05rem;line-height:1.8;color:rgba(232,228,220,.8)">
-      <p><strong style="color:var(--gold-lt)">Life Path Number</strong> — The most important number in numerology. Derived by reducing your full date of birth (day + month + year) to a single digit (or master number 11, 22, 33). It represents your innate traits, the challenges you will face, and the opportunities available.</p>
+      <p><strong style="color:var(--gold-lt)">Name Number</strong> — The most important number derived from your name. Calculated by adding all the Chaldean values of the letters in your name and reducing to a single digit. It reveals the hidden meaning of your name and your core vibration.</p>
       <br/>
-      <p><strong style="color:var(--gold-lt)">Lucky Number</strong> — Calculated by adding your Life Path with your Name Number (Chaldean method). This is your most fortunate number for daily decisions.</p>
+      <p><strong style="color:var(--gold-lt)">Lucky Number</strong> — A name which brings luck and prosperity to you becomes your lucky name. Similarly, your lucky number helps you to become successful in any undertaking. A lucky day of the week which falls on your lucky number or friendly number is more favorable.</p>
       <br/>
-      <p><strong style="color:var(--gold-lt)">Destiny Number (Expression)</strong> — The sum of all letters of your full birth name, reduced to a single digit. It represents your natural talents and what you are destined to achieve.</p>
+      <p><strong style="color:var(--gold-lt)">Friendly Numbers</strong> — Numbers that have harmonious vibrations with your name number. Dates, addresses, phone numbers or any other numbers that reduce to a friendly number are favorable for you.</p>
       <br/>
-      <p><strong style="color:var(--gold-lt)">Soul Urge Number</strong> — Calculated only from the vowels in your full name. Reveals your inner self, deepest desires, and what truly motivates you.</p>
+      <p><strong style="color:var(--gold-lt)">Enemy Numbers</strong> — Numbers that create friction or challenges when they appear in your life. It is advisable to avoid important decisions on dates that reduce to enemy numbers.</p>
       <br/>
-      <p><strong style="color:var(--gold-lt)">Inner Dream Number</strong> — Calculated from the consonants of your name. Represents your unconscious aspirations, your secret self.</p>
+      <p><strong style="color:var(--gold-lt)">Life Path Number</strong> — Derived by reducing your full date of birth (day + month + year) to a single digit. It represents your innate traits and the path you are destined to walk in this lifetime.</p>
       <br/>
-      <p><strong style="color:var(--gold-lt)">Personal Year Number</strong> — Changes every January. Calculated by adding your birth month + birth day + current year. Guides the theme and energy of your current year.</p>
+      <p><strong style="color:var(--gold-lt)">Personal Year Number</strong> — Changes every year. Calculated by adding your birth day + birth month + current year. It guides the theme and energy of your current year.</p>
     </div>
   </div>
 
-  <!-- Footer -->
   <footer>
     <p>✦ For entertainment &amp; spiritual reflection purposes. Numbers are symbolic guides, not guarantees. ✦</p>
     <p style="margin-top:8px">
       <a href="#" onclick="scrollTop()">↑ Calculate Again</a> &nbsp;·&nbsp;
-      <a href="https://en.wikipedia.org/wiki/Numerology" target="_blank" rel="noopener">About Numerology</a>
+      <a href="https://en.wikipedia.org/wiki/Chaldean_numerology" target="_blank" rel="noopener">About Chaldean Numerology</a>
     </p>
-    <p style="margin-top:10px;font-size:.7rem;opacity:.5">© <span id="footerYear"></span> LuckyNumbers.page · All rights reserved</p>
+    <p style="margin-top:10px;font-size:.7rem;opacity:.5">© <span id="footerYear"></span> numaky.github.io · All rights reserved</p>
   </footer>
 
-</div><!-- /wrapper -->
+</div>
 
 <script>
-/* ═══════════════════════════════════════════════
+/* ═══════════════════════
    STAR CANVAS
-═══════════════════════════════════════════════ */
+═══════════════════════ */
 (function(){
-  const c = document.getElementById('stars');
-  const ctx = c.getContext('2d');
-  let W, H, stars=[];
-  function resize(){ W=c.width=window.innerWidth; H=c.height=window.innerHeight; }
+  const c=document.getElementById('stars');
+  const ctx=c.getContext('2d');
+  let W,H,stars=[];
+  function resize(){W=c.width=window.innerWidth;H=c.height=window.innerHeight;}
   function init(){
     stars=[];
     for(let i=0;i<180;i++){
@@ -561,68 +596,149 @@
   function draw(){
     ctx.clearRect(0,0,W,H);
     stars.forEach(s=>{
-      s.a+=s.da; if(s.a>1||s.a<0) s.da*=-1;
-      s.y+=s.speed; if(s.y>H) s.y=0;
-      ctx.beginPath();
-      ctx.arc(s.x,s.y,s.r,0,Math.PI*2);
-      ctx.fillStyle=`rgba(255,240,200,${s.a})`;
-      ctx.fill();
+      s.a+=s.da; if(s.a>1||s.a<0)s.da*=-1;
+      s.y+=s.speed; if(s.y>H)s.y=0;
+      ctx.beginPath();ctx.arc(s.x,s.y,s.r,0,Math.PI*2);
+      ctx.fillStyle=`rgba(255,240,200,${s.a})`;ctx.fill();
     });
     requestAnimationFrame(draw);
   }
-  resize(); init(); draw();
+  resize();init();draw();
   window.addEventListener('resize',()=>{resize();init();});
 })();
 
 document.getElementById('footerYear').textContent = new Date().getFullYear();
 document.getElementById('currentYear').textContent = new Date().getFullYear();
 
-/* ═══════════════════════════════════════════════
-   NUMEROLOGY DATA
-═══════════════════════════════════════════════ */
-const PYTHAGOREAN = {
-  A:1,B:2,C:3,D:4,E:5,F:8,G:3,H:5,I:1,J:1,K:2,L:3,M:4,
-  N:5,O:7,P:8,Q:1,R:2,S:3,T:4,U:6,V:6,W:6,X:5,Y:1,Z:7
-};
-// Chaldean system
+/* ═══════════════════════
+   CHALDEAN NUMEROLOGY DATA
+═══════════════════════ */
+// True Chaldean letter values (9 is sacred and not assigned to any letter)
 const CHALDEAN = {
   A:1,B:2,C:3,D:4,E:5,F:8,G:3,H:5,I:1,J:1,K:2,L:3,M:4,
   N:5,O:7,P:8,Q:1,R:2,S:3,T:4,U:6,V:6,W:6,X:5,Y:1,Z:7
 };
 const VOWELS = new Set(['A','E','I','O','U']);
 
-const LIFE_PATH_DATA = {
-  1:{ title:'The Leader', meaning:'You are a natural-born leader with a powerful drive for independence and originality. Your energy is creative, pioneering, and goal-oriented. You forge your own path and thrive when given autonomy. <strong>Challenge:</strong> learning to collaborate without dominating.', planet:'☉ Sun', element:'🔥 Fire', colors:[{name:'Gold',hex:'#FFD700'},{name:'Red',hex:'#CC2200'},{name:'Orange',hex:'#FF6B35'}], days:['Sunday','Monday'], gems:{icon:'💎',name:'Ruby',desc:'Amplifies your leadership energy and boosts confidence and vitality. Ruby resonates with your ruling Sun.', amazon:'https://www.amazon.com/s?k=ruby+gemstone+crystal&tag=YOUR-AFFILIATE-TAG'}, compat:{best:[1,5,9],good:[2,3],neutral:[4,7],avoid:[6,8]} },
-  2:{ title:'The Diplomat', meaning:'You are a sensitive, intuitive soul — the ultimate peacemaker. You thrive in partnerships and have an extraordinary gift for cooperation. <strong>Challenge:</strong> learning to value your own needs as deeply as you value others\'.', planet:'☽ Moon', element:'💧 Water', colors:[{name:'Silver',hex:'#C0C0C0'},{name:'Cream',hex:'#FFFDD0'},{name:'Pale Blue',hex:'#AED6F1'}], days:['Monday','Friday'], gems:{icon:'🌙',name:'Moonstone',desc:'Enhances your intuition and emotional balance. Moonstone is the stone of inner growth and nurturing.',amazon:'https://www.amazon.com/s?k=moonstone+crystal&tag=YOUR-AFFILIATE-TAG'}, compat:{best:[2,4,8],good:[6,9],neutral:[3,7],avoid:[1,5]} },
-  3:{ title:'The Creative', meaning:'You are the artist, the communicator, the eternal optimist. Your life path is about self-expression, joy, and inspiration. You uplift everyone around you. <strong>Challenge:</strong> staying focused — scatter is your greatest enemy.', planet:'♃ Jupiter', element:'🔥 Fire', colors:[{name:'Yellow',hex:'#FFE135'},{name:'Purple',hex:'#7B2FBE'},{name:'Pink',hex:'#FF69B4'}], days:['Thursday','Friday'], gems:{icon:'💛',name:'Citrine',desc:'The merchant\'s stone — attracts abundance and fuels your creative spark. Perfect for your optimistic Jupiter energy.',amazon:'https://www.amazon.com/s?k=citrine+crystal+stone&tag=YOUR-AFFILIATE-TAG'}, compat:{best:[3,6,9],good:[1,2],neutral:[5,8],avoid:[4,7]} },
-  4:{ title:'The Builder', meaning:'You are the foundation of everything. Practical, disciplined, loyal — you build structures that last. You bring order from chaos. <strong>Challenge:</strong> rigidity; learning to embrace change and spontaneity.', planet:'♄ Saturn', element:'🌍 Earth', colors:[{name:'Green',hex:'#228B22'},{name:'Brown',hex:'#8B4513'},{name:'Navy',hex:'#003366'}], days:['Saturday','Sunday'], gems:{icon:'🟢',name:'Emerald',desc:'Grounds your earth energy and attracts loyalty, stability, and prosperity. Emerald aligns with Saturn\'s disciplined vibration.',amazon:'https://www.amazon.com/s?k=emerald+gemstone&tag=YOUR-AFFILIATE-TAG'}, compat:{best:[2,4,8],good:[6,7],neutral:[1,9],avoid:[3,5]} },
-  5:{ title:'The Adventurer', meaning:'You are the free spirit — dynamic, versatile, magnetic. Freedom is your birthright. You experience the most when you let go of routine. <strong>Challenge:</strong> commitment; avoiding self-destructive escapism.', planet:'☿ Mercury', element:'💨 Air', colors:[{name:'Turquoise',hex:'#40E0D0'},{name:'Silver',hex:'#C0C0C0'},{name:'Electric Blue',hex:'#007BFF'}], days:['Wednesday','Friday'], gems:{icon:'🔵',name:'Aquamarine',desc:'Enhances your freedom-loving nature and powers of communication. Aquamarine resonates with Mercury\'s fleet-footed energy.',amazon:'https://www.amazon.com/s?k=aquamarine+crystal&tag=YOUR-AFFILIATE-TAG'}, compat:{best:[1,5,7],good:[3,9],neutral:[2,6],avoid:[4,8]} },
-  6:{ title:'The Nurturer', meaning:'You are the cosmic caretaker — loving, responsible, artistic. Home and family are your greatest priorities. You radiate warmth and healing. <strong>Challenge:</strong> over-giving; learning that boundaries are an act of love.', planet:'♀ Venus', element:'🌍 Earth', colors:[{name:'Rose',hex:'#FF66AA'},{name:'Indigo',hex:'#4B0082'},{name:'Teal',hex:'#008080'}], days:['Friday','Monday'], gems:{icon:'💖',name:'Rose Quartz',desc:'The ultimate stone of unconditional love. Perfect for your Venus-ruled nurturing soul — attracts harmony and deep connections.',amazon:'https://www.amazon.com/s?k=rose+quartz+crystal&tag=YOUR-AFFILIATE-TAG'}, compat:{best:[3,6,9],good:[2,4],neutral:[1,8],avoid:[5,7]} },
-  7:{ title:'The Seeker', meaning:'You are the mystic, the philosopher, the eternal seeker of truth. Introspective and analytical, you seek the deeper meaning behind everything. <strong>Challenge:</strong> isolation; trusting others enough to let them in.', planet:'♆ Neptune', element:'💧 Water', colors:[{name:'Violet',hex:'#8A2BE2'},{name:'Silver',hex:'#C0C0C0'},{name:'Deep Blue',hex:'#00008B'}], days:['Monday','Wednesday'], gems:{icon:'🔮',name:'Amethyst',desc:'Enhances spiritual awareness and psychic intuition. Amethyst is the perfect stone for your Neptune-ruled, truth-seeking soul.',amazon:'https://www.amazon.com/s?k=amethyst+crystal&tag=YOUR-AFFILIATE-TAG'}, compat:{best:[4,5,7],good:[1,9],neutral:[2,6],avoid:[3,8]} },
-  8:{ title:'The Executive', meaning:'You are born to achieve material mastery and worldly power. Ambitious, strategic, and disciplined, you are built for large-scale success. <strong>Challenge:</strong> workaholism; remembering that love and relationships are your truest wealth.', planet:'♄ Saturn', element:'🌍 Earth', colors:[{name:'Black',hex:'#1a1a1a'},{name:'Navy',hex:'#003366'},{name:'Gold',hex:'#FFD700'}], days:['Saturday','Thursday'], gems:{icon:'⚫',name:'Black Onyx',desc:'Amplifies your authority, resilience, and strategic power. Onyx repels negative energy and boosts your Saturn-ruled ambition.',amazon:'https://www.amazon.com/s?k=black+onyx+stone&tag=YOUR-AFFILIATE-TAG'}, compat:{best:[2,4,8],good:[6,1],neutral:[9,3],avoid:[5,7]} },
-  9:{ title:'The Humanitarian', meaning:'You are the old soul — compassionate, wise, and devoted to the greater good. You have lived many lifetimes and you carry that depth. <strong>Challenge:</strong> learning to receive love as freely as you give it.', planet:'♂ Mars', element:'🔥 Fire', colors:[{name:'Crimson',hex:'#DC143C'},{name:'Gold',hex:'#FFD700'},{name:'White',hex:'#F8F8FF'}], days:['Tuesday','Thursday'], gems:{icon:'🔴',name:'Red Coral',desc:'Energises your Martian drive for justice and compassion. Red Coral sharpens your intuition and protects you during times of sacrifice.',amazon:'https://www.amazon.com/s?k=red+coral+gemstone&tag=YOUR-AFFILIATE-TAG'}, compat:{best:[3,6,9],good:[1,5],neutral:[2,4],avoid:[7,8]} },
-  11:{ title:'The Illuminator', meaning:'You carry the master number 11 — the spiritual messenger. You are highly intuitive, visionary, and a natural channel for inspiration. The world is changed through your ideas. <strong>Challenge:</strong> nervous energy; learning to ground your intensity.', planet:'☽ Moon / ☉ Sun', element:'💧 Water / 🔥 Fire', colors:[{name:'Platinum',hex:'#E5E4E2'},{name:'Violet',hex:'#8A2BE2'},{name:'White',hex:'#FFFFFF'}], days:['Monday','Sunday'], gems:{icon:'🤍',name:'Clear Quartz',desc:'The master healer amplifies your extraordinary intuition and spiritual channel. The perfect crystal for an 11 life path.',amazon:'https://www.amazon.com/s?k=clear+quartz+crystal&tag=YOUR-AFFILIATE-TAG'}, compat:{best:[2,6,11],good:[3,7],neutral:[1,9],avoid:[4,8]} },
-  22:{ title:'The Master Builder', meaning:'You carry the most powerful number in numerology. 22 is the master builder — you can literally manifest anything you envision. Your potential is staggering. <strong>Challenge:</strong> living up to your own enormous potential without buckling under pressure.', planet:'♄ Saturn / ♃ Jupiter', element:'🌍 Earth', colors:[{name:'Gold',hex:'#FFD700'},{name:'Blue',hex:'#0047AB'},{name:'Emerald',hex:'#50C878'}], days:['Saturday','Thursday'], gems:{icon:'💚',name:'Jade',desc:'The stone of abundance, harmony, and wise manifestation. Jade perfectly supports the Master Builder\'s grounded yet extraordinary power.',amazon:'https://www.amazon.com/s?k=jade+stone+crystal&tag=YOUR-AFFILIATE-TAG'}, compat:{best:[4,8,22],good:[6,2],neutral:[1,3],avoid:[5,7]} },
-  33:{ title:'The Master Teacher', meaning:'The rarest life path — 33 is the master teacher. You are a channel of pure compassion, healing, and unconditional love. Your life is dedicated to uplifting humanity. <strong>Challenge:</strong> martyrdom; accepting that your own wellbeing matters enormously.',  planet:'♀ Venus / ♃ Jupiter', element:'🔥 Fire / 💧 Water', colors:[{name:'Gold',hex:'#FFD700'},{name:'Rose',hex:'#FF66AA'},{name:'Turquoise',hex:'#40E0D0'}], days:['Friday','Thursday'], gems:{icon:'💜',name:'Sugilite',desc:'The stone of the master healer — rare, powerful, and deeply protective. Sugilite enhances your extraordinary gift for channeling love.',amazon:'https://www.amazon.com/s?k=sugilite+crystal&tag=YOUR-AFFILIATE-TAG'}, compat:{best:[6,9,33],good:[3,2],neutral:[1,7],avoid:[5,4]} }
+/* ── NUMBER DATA (Indian Chaldean / askastrologer.com style) ── */
+const NUM_DATA = {
+  1:{
+    title:'The Sun — Ambitious & Creative',
+    meaning:'Persons governed by number 1 are ambitious, active and energetic. They have natural leadership qualities and are self-reliant and independent. The native is very active and will move forward with courage and achieve success. He will excel in politics, government and administration. <strong>Their lucky name calculator points to positions of authority and fame.</strong> They are born innovators who forge new paths and inspire others through their originality and determination.',
+    planet:'☉ Sun',
+    element:'🔥 Fire',
+    colors:[{name:'Gold',hex:'#FFD700'},{name:'Orange',hex:'#FF6B35'},{name:'Yellow',hex:'#FFE135'}],
+    days:['Sunday','Monday'],
+    luckyDates:[1,10,19,28],
+    friendly:[1,2,4,9], neutral:[3,5,7], enemy:[6,8],
+    gems:{icon:'💎',name:'Ruby',desc:'Amplifies your Sun energy — boosts confidence, vitality and leadership. Ruby is the stone of kings and natural rulers.',amazon:'https://www.amazon.com/s?k=ruby+gemstone+crystal&tag=YOUR-AFFILIATE-TAG'}
+  },
+  2:{
+    title:'The Moon — Sensitive & Intuitive',
+    meaning:'Persons governed by number 2 are emotional, sensitive and highly imaginative. They are gentle, kind and cooperative by nature. They have strong psychic abilities and an extraordinary intuition. <strong>The Moon governs their feelings and inner emotional world.</strong> They are excellent diplomats who love peace and harmony. They thrive best in partnerships and are gifted at understanding the emotions of others. Beauty and nature deeply attract them.',
+    planet:'☽ Moon',
+    element:'💧 Water',
+    colors:[{name:'White',hex:'#FFFFFF'},{name:'Cream',hex:'#FFFDD0'},{name:'Light Green',hex:'#90EE90'}],
+    days:['Monday','Friday'],
+    luckyDates:[2,11,20,29],
+    friendly:[1,2,3,6], neutral:[5,7], enemy:[4,8,9],
+    gems:{icon:'🌙',name:'Moonstone',desc:'Enhances intuition and emotional balance. Moonstone is the stone of inner growth, nurturing and psychic sensitivity.',amazon:'https://www.amazon.com/s?k=moonstone+crystal&tag=YOUR-AFFILIATE-TAG'}
+  },
+  3:{
+    title:'The Jupiter — Optimistic & Fortunate',
+    meaning:'Persons governed by number 3 are optimistic, disciplined and ambitious. Number 3 represents Jupiter and is the number of luck and fortune in Chaldean numerology. <strong>These people are enthusiastic, positive and full of energy.</strong> They are excellent communicators who attract opportunities wherever they go. They succeed in creative fields, education, law and spiritual pursuits. They have a natural gift for inspiring and uplifting those around them.',
+    planet:'♃ Jupiter',
+    element:'🔥 Fire',
+    colors:[{name:'Yellow',hex:'#FFE135'},{name:'Violet',hex:'#7B2FBE'},{name:'Purple',hex:'#9B59B6'}],
+    days:['Thursday','Tuesday'],
+    luckyDates:[3,12,21,30],
+    friendly:[1,2,3,6,9], neutral:[5,8], enemy:[4,7],
+    gems:{icon:'💛',name:'Yellow Sapphire',desc:'The gemstone of Jupiter — attracts wisdom, wealth and fortune. Perfect for lucky number 3 natives who are born under this expansive planet.',amazon:'https://www.amazon.com/s?k=yellow+sapphire+gemstone&tag=YOUR-AFFILIATE-TAG'}
+  },
+  4:{
+    title:'The Rahu — Hardworking & Unconventional',
+    meaning:'Persons governed by number 4 are hardworking, methodical, practical and unconventional. Number 4 is ruled by Rahu (the North Node) in Indian Chaldean numerology. <strong>These people are original thinkers and often ahead of their time.</strong> They face unexpected challenges in life but overcome them through sheer determination and hard work. They are highly disciplined and build lasting structures through their persistent effort.',
+    planet:'☊ Rahu (North Node)',
+    element:'🌍 Earth',
+    colors:[{name:'Electric Blue',hex:'#007BFF'},{name:'Dark Grey',hex:'#555555'},{name:'Khaki',hex:'#BDB76B'}],
+    days:['Saturday','Sunday'],
+    luckyDates:[4,13,22,31],
+    friendly:[1,2,4,5,7], neutral:[8], enemy:[3,6,9],
+    gems:{icon:'🟤',name:'Hessonite (Gomed)',desc:'The gemstone of Rahu — removes obstacles and neutralizes negative energy. Hessonite provides stability and strength to number 4 natives.',amazon:'https://www.amazon.com/s?k=hessonite+garnet+gomed&tag=YOUR-AFFILIATE-TAG'}
+  },
+  5:{
+    title:'The Mercury — Versatile & Communicative',
+    meaning:'Persons governed by number 5 are versatile, adaptable, communicative and quick-witted. Number 5 is ruled by Mercury and is an excellent number for business, communication and marketing. <strong>These people make friends easily and are gifted at persuasion and sales.</strong> They love variety, travel and new experiences. They are quick to learn and adapt to any situation with ease. Freedom is their greatest need and adventure their greatest joy.',
+    planet:'☿ Mercury',
+    element:'💨 Air',
+    colors:[{name:'Light Green',hex:'#90EE90'},{name:'White',hex:'#FFFFFF'},{name:'Grey',hex:'#AAAAAA'}],
+    days:['Wednesday','Friday'],
+    luckyDates:[5,14,23],
+    friendly:[1,4,5,6,7], neutral:[2,9], enemy:[3,8],
+    gems:{icon:'🟢',name:'Emerald',desc:'The stone of Mercury — sharpens intellect, improves communication and brings commercial success. Perfect for quick-minded number 5 natives.',amazon:'https://www.amazon.com/s?k=emerald+gemstone+stone&tag=YOUR-AFFILIATE-TAG'}
+  },
+  6:{
+    title:'The Venus — Loving & Harmonious',
+    meaning:'Persons governed by number 6 are loving, harmonious, artistic and responsible. Number 6 is ruled by Venus and represents beauty, family and deep emotional bonds. <strong>These people are natural healers who radiate warmth and attract affection.</strong> They are artistic, creative and have refined aesthetic sensibilities. Home and family are their greatest priorities. They succeed in arts, fashion, beauty and any field that requires care and creativity.',
+    planet:'♀ Venus',
+    element:'🌍 Earth',
+    colors:[{name:'Rose Pink',hex:'#FF66AA'},{name:'Sky Blue',hex:'#87CEEB'},{name:'Indigo',hex:'#4B0082'}],
+    days:['Friday','Monday'],
+    luckyDates:[6,15,24],
+    friendly:[2,3,5,6,9], neutral:[1,8], enemy:[4,7],
+    gems:{icon:'💎',name:'Diamond / White Zircon',desc:'The gemstone of Venus — attracts love, luxury and artistic inspiration. Diamond or white zircon resonates powerfully with number 6 vibrations.',amazon:'https://www.amazon.com/s?k=white+zircon+gemstone&tag=YOUR-AFFILIATE-TAG'}
+  },
+  7:{
+    title:'The Ketu — Mystical & Spiritual',
+    meaning:'Persons governed by number 7 are mysterious, intuitive, spiritual and highly analytical. Number 7 is ruled by Ketu (the South Node) in Indian Chaldean numerology. <strong>These are deep thinkers, researchers and natural philosophers.</strong> They are strongly attracted to spirituality, the occult and hidden knowledge. They are introspective by nature and prefer solitude for reflection and study. Their inner wisdom and psychic sensitivity set them apart.',
+    planet:'☋ Ketu (South Node)',
+    element:'💧 Water',
+    colors:[{name:'Light Green',hex:'#90EE90'},{name:'White',hex:'#FFFFFF'},{name:'Yellow',hex:'#FFE135'}],
+    days:['Monday','Sunday'],
+    luckyDates:[7,16,25],
+    friendly:[2,4,5,7], neutral:[1,3], enemy:[6,8,9],
+    gems:{icon:'🔮',name:'Cat\'s Eye (Chrysoberyl)',desc:'The gemstone of Ketu — enhances spiritual awareness and psychic intuition. Cat\'s Eye is the most powerful stone for the spiritual number 7.',amazon:'https://www.amazon.com/s?k=cat+eye+chrysoberyl+gemstone&tag=YOUR-AFFILIATE-TAG'}
+  },
+  8:{
+    title:'The Saturn — Disciplined & Powerful',
+    meaning:'Persons governed by number 8 are disciplined, authoritative and highly ambitious. Number 8 is ruled by Saturn and carries deep karmic significance in Chaldean numerology. <strong>These people work hard and achieve great material success through persistent effort.</strong> They are strategic thinkers who are built for large-scale accomplishments. Saturn teaches them important life lessons through trials, but rewards them with lasting authority, wealth and recognition.',
+    planet:'♄ Saturn',
+    element:'🌍 Earth',
+    colors:[{name:'Dark Blue',hex:'#003366'},{name:'Black',hex:'#1a1a1a'},{name:'Dark Brown',hex:'#5C4033'}],
+    days:['Saturday','Thursday'],
+    luckyDates:[8,17,26],
+    friendly:[1,4,8], neutral:[3,5], enemy:[2,6,7,9],
+    gems:{icon:'⚫',name:'Blue Sapphire (Neelam)',desc:'The gemstone of Saturn — one of the most powerful stones in Vedic astrology. Blue Sapphire brings discipline, authority and rapid material success.',amazon:'https://www.amazon.com/s?k=blue+sapphire+gemstone+stone&tag=YOUR-AFFILIATE-TAG'}
+  },
+  9:{
+    title:'The Mars — Courageous & Humanitarian',
+    meaning:'Persons governed by number 9 are courageous, energetic, generous and deeply humanitarian. Number 9 is ruled by Mars and is the number of warriors and humanitarians. <strong>These are fighters who achieve success through courage and sheer determination.</strong> They are philanthropic souls who work for the greater good and sacrifice for others. In Chaldean numerology, 9 is the sacred number of completion and universal consciousness — held in the highest regard.',
+    planet:'♂ Mars',
+    element:'🔥 Fire',
+    colors:[{name:'Red',hex:'#CC2200'},{name:'Rose',hex:'#FF66AA'},{name:'Gold',hex:'#FFD700'}],
+    days:['Tuesday','Thursday'],
+    luckyDates:[9,18,27],
+    friendly:[1,3,6,9], neutral:[2,5], enemy:[4,7,8],
+    gems:{icon:'🔴',name:'Red Coral',desc:'The gemstone of Mars — energises courage, passion and determination. Red Coral sharpens intuition and protects during times of challenge.',amazon:'https://www.amazon.com/s?k=red+coral+gemstone&tag=YOUR-AFFILIATE-TAG'}
+  }
 };
 
 const PERSONAL_YEAR_MEANINGS = {
-  1:'A year of new beginnings and fresh starts. Plant seeds boldly — what you launch now will grow for nine years.',
-  2:'A year of patience, partnerships, and subtle growth. Nurture relationships. Avoid forcing outcomes.',
-  3:'A year of creativity, joy, and self-expression. Say yes to social opportunities. Your voice matters.',
-  4:'A year of hard work and laying foundations. Build systems. The effort you put in now will compound.',
-  5:'A year of unexpected change, travel, and freedom. Embrace the new. Resist clinging to what\'s outdated.',
-  6:'A year of responsibility, family, and love. Your home life takes centre stage. Nurture your relationships.',
-  7:'A year of spiritual deepening and inner reflection. Retreat, study, meditate. The answers are within.',
-  8:'A year of material achievement and financial opportunity. Push for your ambitions — the universe is backing you.',
-  9:'A year of endings, release, and completion. Let go of what no longer serves. Make space for the next cycle.',
+  1:'A year of new beginnings and fresh starts. Plant seeds boldly — what you launch now will grow for nine years. Take initiative and trust your instincts.',
+  2:'A year of patience, partnerships and subtle growth. Nurture relationships carefully. Avoid forcing outcomes — let things develop at their natural pace.',
+  3:'A year of creativity, joy and self-expression. Say yes to social opportunities. Your voice matters more than ever — speak, create and connect.',
+  4:'A year of hard work and laying foundations. Build systems. The effort you put in now will compound and reward you greatly in years ahead.',
+  5:'A year of unexpected change, travel and freedom. Embrace the new. Resist clinging to what is outdated — the universe is opening new doors for you.',
+  6:'A year of responsibility, family and love. Your home life takes centre stage. Nurture your most important relationships with care and dedication.',
+  7:'A year of spiritual deepening and inner reflection. Retreat, study, meditate. The answers you seek are found within — go inward with patience.',
+  8:'A year of material achievement and financial opportunity. Push boldly for your ambitions — the universe is backing your efforts with full force.',
+  9:'A year of endings, release and completion. Let go of what no longer serves your higher purpose. Clear the way to make space for the next great cycle.',
 };
 
 const CHINESE_ZODIAC = {
   0:'🐀 Rat',1:'🐂 Ox',2:'🐯 Tiger',3:'🐇 Rabbit',4:'🐉 Dragon',5:'🐍 Snake',
   6:'🐴 Horse',7:'🐐 Goat',8:'🐒 Monkey',9:'🐓 Rooster',10:'🐕 Dog',11:'🐖 Pig'
 };
-
 const WESTERN_ZODIAC_DATA = [
   {name:'♑ Capricorn',from:[12,22],to:[1,19]},{name:'♒ Aquarius',from:[1,20],to:[2,18]},
   {name:'♓ Pisces',from:[2,19],to:[3,20]},{name:'♈ Aries',from:[3,21],to:[4,19]},
@@ -632,9 +748,9 @@ const WESTERN_ZODIAC_DATA = [
   {name:'♏ Scorpio',from:[10,23],to:[11,21]},{name:'♐ Sagittarius',from:[11,22],to:[12,21]}
 ];
 
-/* ═══════════════════════════════════════════════
+/* ═══════════════════════
    UTILITY FUNCTIONS
-═══════════════════════════════════════════════ */
+═══════════════════════ */
 function reduce(n, keepMaster=true){
   while(n>9){
     if(keepMaster&&(n===11||n===22||n===33)) break;
@@ -643,61 +759,47 @@ function reduce(n, keepMaster=true){
   return n;
 }
 
-function nameToNumber(name, vowelsOnly=false, consOnly=false){
+function nameToNumber(name){
   const letters = name.toUpperCase().replace(/[^A-Z]/g,'').split('');
-  let sum=0;
-  letters.forEach(l=>{
-    const isV = VOWELS.has(l);
-    if(vowelsOnly && !isV) return;
-    if(consOnly && isV) return;
-    sum += PYTHAGOREAN[l]||0;
-  });
+  let sum = 0;
+  letters.forEach(l => { sum += CHALDEAN[l] || 0; });
   return reduce(sum);
 }
 
 function getLifePath(dob){
   const d = new Date(dob+'T00:00:00');
-  const day   = d.getDate();
-  const month = d.getMonth()+1;
-  const year  = d.getFullYear();
-  // Reduce each component first for accuracy
-  const dr = reduce(day); const mr = reduce(month); const yr = reduce(year);
-  return reduce(dr+mr+yr);
+  const day = d.getDate(), month = d.getMonth()+1, year = d.getFullYear();
+  return reduce(reduce(day)+reduce(month)+reduce(year));
 }
 
 function getPersonalYear(dob){
-  const d   = new Date(dob+'T00:00:00');
-  const day = d.getDate(); const month = d.getMonth()+1;
+  const d = new Date(dob+'T00:00:00');
+  const day = d.getDate(), month = d.getMonth()+1;
   const curYear = new Date().getFullYear();
   return reduce(reduce(day)+reduce(month)+reduce(curYear), false);
 }
 
-function getChineseZodiac(year){
-  return CHINESE_ZODIAC[(year-1900)%12];
-}
+function getChineseZodiac(year){ return CHINESE_ZODIAC[(year-1900)%12]; }
 
 function getWesternZodiac(dob){
-  const d   = new Date(dob+'T00:00:00');
-  const m   = d.getMonth()+1; const day = d.getDate();
+  const d = new Date(dob+'T00:00:00');
+  const m = d.getMonth()+1, day = d.getDate();
   for(const z of WESTERN_ZODIAC_DATA){
-    const [fm,fd]=z.from; const [tm,td]=z.to;
-    if(fm===tm){ if(m===fm && day>=fd && day<=td) return z.name; }
-    else{
-      if((m===fm&&day>=fd)||(m===tm&&day<=td)) return z.name;
-    }
+    const [fm,fd]=z.from, [tm,td]=z.to;
+    if(fm===tm){ if(m===fm&&day>=fd&&day<=td) return z.name; }
+    else{ if((m===fm&&day>=fd)||(m===tm&&day<=td)) return z.name; }
   }
   return WESTERN_ZODIAC_DATA[0].name;
 }
 
-/* ═══════════════════════════════════════════════
-   MAIN CALCULATE FUNCTION
-═══════════════════════════════════════════════ */
+/* ═══════════════════════
+   CALCULATE
+═══════════════════════ */
 function calculate(){
   const name = document.getElementById('fullname').value.trim();
   const dob  = document.getElementById('dob').value;
 
-  if(!name){ alert('Please enter your full name at birth.'); return; }
-  if(!dob)  { alert('Please enter your date of birth.'); return; }
+  if(!name){ alert('Please enter your full name.'); return; }
 
   document.getElementById('loader').style.display = 'block';
   document.getElementById('results').style.display = 'none';
@@ -711,27 +813,29 @@ function calculate(){
 }
 
 function renderResults(name, dob){
-  const lp        = getLifePath(dob);
-  const destiny   = nameToNumber(name);
-  const soul      = nameToNumber(name, true);
-  const dream     = nameToNumber(name, false, true);
-  const lucky     = reduce(lp + destiny, false) || 1;
-  const personal  = getPersonalYear(dob);
-  const data      = LIFE_PATH_DATA[lp] || LIFE_PATH_DATA[1];
+  const nameNum  = nameToNumber(name);
+  const safeNum  = (nameNum > 9) ? reduce(nameNum) : nameNum;
+  const data     = NUM_DATA[safeNum] || NUM_DATA[1];
+  const firstName = name.split(' ')[0];
 
-  const dobj = new Date(dob+'T00:00:00');
-  const cn   = getChineseZodiac(dobj.getFullYear());
-  const wz   = getWesternZodiac(dob);
-
-  /* — BIG NUMBERS — */
-  const nums = [
-    {n:lp,   label:'Life Path',  emoji:'🌟', highlight:true},
-    {n:lucky, label:'Lucky Number', emoji:'🍀', highlight:false},
-    {n:destiny,label:'Destiny', emoji:'✨', highlight:false},
-    {n:soul,   label:'Soul Urge', emoji:'💫', highlight:false},
-    {n:dream,  label:'Inner Dream', emoji:'🌙', highlight:false},
-    {n:personal,label:'Personal Year', emoji:'🔮', highlight:false},
+  /* BIG NUMBERS */
+  let nums = [
+    {n: nameNum,  label:'Name Number',  emoji:'✨', highlight:true},
   ];
+  if(dob){
+    const lp = getLifePath(dob);
+    const lucky = reduce(nameNum + lp, false) || 1;
+    const personal = getPersonalYear(dob);
+    nums.push(
+      {n: lp,       label:'Life Path',    emoji:'🌟', highlight:false},
+      {n: lucky,    label:'Lucky Number', emoji:'🍀', highlight:false},
+      {n: personal, label:'Personal Year',emoji:'🔮', highlight:false},
+    );
+  } else {
+    const luckyFromName = reduce(nameNum + nameNum, false) || safeNum;
+    nums.push({n: luckyFromName, label:'Lucky Number', emoji:'🍀', highlight:false});
+  }
+
   document.getElementById('numGrid').innerHTML = nums.map(item=>`
     <div class="num-card${item.highlight?' highlight':''}">
       <div class="num-emoji">${item.emoji}</div>
@@ -740,35 +844,19 @@ function renderResults(name, dob){
     </div>
   `).join('');
 
-  /* — LIFE PATH MEANING — */
-  document.getElementById('lifepathMeaning').innerHTML =
-    `<strong>${name.split(' ')[0]}, you are Life Path ${lp} — ${data.title}.</strong><br/><br/>${data.meaning}`;
+  /* NAME MEANING */
+  document.getElementById('nameMeaning').innerHTML =
+    `<strong>${firstName}, your name vibrates to number ${nameNum} — ${data.title}.</strong><br/><br/>${data.meaning}`;
 
-  /* — COSMIC PROFILE — */
-  document.getElementById('profileRow').innerHTML = `
-    <div class="info-block">
-      <div class="ib-label">Ruling Planet</div>
-      <div class="ib-value">${data.planet}</div>
-      <div class="ib-sub">Element: ${data.element}</div>
-    </div>
-    <div class="info-block">
-      <div class="ib-label">Western Zodiac</div>
-      <div class="ib-value">${wz}</div>
-      <div class="zodiac-badge"><span class="zb-icon">${cn.split(' ')[0]}</span><span>Chinese: ${cn.split(' ').slice(1).join(' ')}</span></div>
-    </div>
-  `;
+  /* FRIENDLY & ENEMY NUMBERS */
+  document.getElementById('fnGrid').innerHTML = [1,2,3,4,5,6,7,8,9].map(n=>{
+    let cls='fn-neutral', label='Neutral';
+    if(data.friendly.includes(n)){ cls='fn-friendly'; label='Friendly'; }
+    else if(data.enemy.includes(n)){ cls='fn-enemy'; label='Enemy'; }
+    return `<div class="fn-num ${cls} tooltip-wrap">${n}<span class="tt">${label}</span></div>`;
+  }).join('');
 
-  /* — PERSONAL YEAR — */
-  const pyMeaning = PERSONAL_YEAR_MEANINGS[personal] || PERSONAL_YEAR_MEANINGS[1];
-  document.getElementById('yearBanner').innerHTML = `
-    <div class="year-num-big">${personal}</div>
-    <div class="year-text">
-      <div class="year-title">Personal Year ${personal} — A year of ${['','New Beginnings','Partnerships','Creativity','Hard Work','Change','Love','Reflection','Achievement','Completion'][personal]||'Transformation'}</div>
-      <p>${pyMeaning}</p>
-    </div>
-  `;
-
-  /* — COLORS & DAYS — */
+  /* COLORS */
   document.getElementById('colorRow').innerHTML = data.colors.map(c=>`
     <div class="color-swatch">
       <div class="swatch-dot" style="background:${c.hex}"></div>
@@ -776,22 +864,32 @@ function renderResults(name, dob){
     </div>
   `).join('');
 
+  /* LUCKY DAYS */
   const allDays = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
   document.getElementById('dayPills').innerHTML = allDays.map(d=>`
     <span class="day-pill ${data.days.includes(d)?'active':'inactive'}">${d}</span>
   `).join('');
 
-  /* — COMPATIBILITY — */
-  const c = data.compat;
-  document.getElementById('compatGrid').innerHTML = [1,2,3,4,5,6,7,8,9].map(n=>{
-    let cls='compat-neutral';
-    if(c.best.includes(n)) cls='compat-best';
-    else if(c.good.includes(n)) cls='compat-good';
-    else if(c.avoid.includes(n)) cls='compat-avoid';
-    return `<div class="compat-num ${cls} tooltip-wrap">${n}<span class="tt">${cls==='compat-best'?'Best match!':cls==='compat-good'?'Good match':cls==='compat-avoid'?'Challenging energy':'Neutral'}</span></div>`;
-  }).join('');
+  /* LUCKY DATES */
+  document.getElementById('datePills').innerHTML = data.luckyDates.map(d=>`
+    <div class="date-pill">${d}</div>
+  `).join('');
 
-  /* — GEMSTONE — */
+  /* PLANET ROW */
+  document.getElementById('planetRow').innerHTML = `
+    <div class="info-block">
+      <div class="ib-label">Ruling Planet</div>
+      <div class="ib-value">${data.planet}</div>
+      <div class="ib-sub">Element: ${data.element}</div>
+    </div>
+    <div class="info-block">
+      <div class="ib-label">Best Numbers for You</div>
+      <div class="ib-value">${data.friendly.join(', ')}</div>
+      <div class="ib-sub">Lucky dates: ${data.luckyDates.join(', ')}</div>
+    </div>
+  `;
+
+  /* GEMSTONE */
   const g = data.gems;
   document.getElementById('gemCard').innerHTML = `
     <div class="gem-icon">${g.icon}</div>
@@ -802,30 +900,68 @@ function renderResults(name, dob){
     </div>
   `;
 
-  /* — SAVE STATE FOR SHARING — */
-  window._shareData = { name: name.split(' ')[0], lp, lucky, wz };
+  /* DOB-DEPENDENT SECTIONS */
+  if(dob){
+    const lp = getLifePath(dob);
+    const lpData = NUM_DATA[lp] || NUM_DATA[1];
+    const personal = getPersonalYear(dob);
+    const pyMeaning = PERSONAL_YEAR_MEANINGS[personal] || PERSONAL_YEAR_MEANINGS[1];
+    const dobj = new Date(dob+'T00:00:00');
+    const cn = getChineseZodiac(dobj.getFullYear());
+    const wz = getWesternZodiac(dob);
+
+    document.getElementById('lifepathCard').style.display = 'block';
+    document.getElementById('lifepathMeaning').innerHTML =
+      `<strong>${firstName}, you are Life Path ${lp} — ${lpData.title}.</strong><br/><br/>${lpData.meaning}`;
+
+    document.getElementById('yearCard').style.display = 'block';
+    const yearNames = ['','New Beginnings','Partnerships','Creativity','Hard Work','Change & Freedom','Love & Responsibility','Inner Reflection','Achievement','Completion'];
+    document.getElementById('yearBanner').innerHTML = `
+      <div class="year-num-big">${personal}</div>
+      <div class="year-text">
+        <div class="year-title">Personal Year ${personal} — A Year of ${yearNames[personal]||'Transformation'}</div>
+        <p>${pyMeaning}</p>
+      </div>
+    `;
+
+    document.getElementById('zodiacCard').style.display = 'block';
+    document.getElementById('zodiacRow').innerHTML = `
+      <div class="info-block">
+        <div class="ib-label">Western Zodiac</div>
+        <div class="ib-value">${wz}</div>
+        <div class="ib-sub">Based on your birth date</div>
+      </div>
+      <div class="info-block">
+        <div class="ib-label">Chinese Zodiac</div>
+        <div class="ib-value">${cn}</div>
+        <div class="zodiac-badge"><span class="zb-icon">${cn.split(' ')[0]}</span><span>${cn.split(' ').slice(1).join(' ')}</span></div>
+      </div>
+    `;
+  } else {
+    document.getElementById('lifepathCard').style.display = 'none';
+    document.getElementById('yearCard').style.display = 'none';
+    document.getElementById('zodiacCard').style.display = 'none';
+  }
+
+  window._shareData = { name: firstName, nameNum, data };
 }
 
-/* ═══════════════════════════════════════════════
-   SHARE FUNCTIONS
-═══════════════════════════════════════════════ */
+/* ═══════════════════════
+   SHARE
+═══════════════════════ */
 function getShareText(){
   const d = window._shareData||{};
-  return `✨ My numerology reading: Life Path ${d.lp||'?'}, Lucky Number ${d.lucky||'?'}, Zodiac ${d.wz||'?'} — Get yours free:`;
+  return `✨ My numerology reading: Name Number ${d.nameNum||'?'} — ${(d.data||{}).planet||''} — Get yours free:`;
 }
 function shareTwitter(){
-  const url = encodeURIComponent(window.location.href);
-  const txt = encodeURIComponent(getShareText());
-  window.open(`https://twitter.com/intent/tweet?text=${txt}&url=${url}`,'_blank');
+  window.open(`https://twitter.com/intent/tweet?text=${encodeURIComponent(getShareText())}&url=${encodeURIComponent(window.location.href)}`,'_blank');
 }
 function shareWhatsApp(){
-  const url = encodeURIComponent(window.location.href);
-  const txt = encodeURIComponent(getShareText()+' '+window.location.href);
-  window.open(`https://wa.me/?text=${txt}`,'_blank');
+  window.open(`https://wa.me/?text=${encodeURIComponent(getShareText()+' '+window.location.href)}`,'_blank');
 }
 function copyLink(){
   navigator.clipboard.writeText(window.location.href).then(()=>{
-    const btn = document.getElementById('copyBtn');
+    const btn=document.getElementById('copyBtn');
     btn.textContent='✅ Copied!';
     setTimeout(()=>btn.textContent='🔗 Copy Link',2000);
   });
@@ -833,13 +969,12 @@ function copyLink(){
 function scrollTop(){ window.scrollTo({top:0,behavior:'smooth'}); return false; }
 </script>
 
-<!-- Structured Data for SEO -->
 <script type="application/ld+json">
 {
   "@context":"https://schema.org",
   "@type":"WebApplication",
   "name":"Lucky Numbers & Numerology Calculator",
-  "description":"Free numerology calculator. Find your Life Path, Lucky Numbers, Destiny, Soul Urge, Ruling Planet and more using your name and date of birth.",
+  "description":"Free Chaldean numerology calculator. Find your Lucky Numbers, Friendly Numbers, Enemy Numbers, Ruling Planet and more using your name. Date of birth optional.",
   "applicationCategory":"LifestyleApplication",
   "operatingSystem":"All",
   "offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},
