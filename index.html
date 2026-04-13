@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Lucky Number Calculator | Free Numerology Reading</title>
+<title>Lucky Number Calculator | Name Numerology</title>
 
 <style>
 :root{
@@ -29,15 +29,14 @@ body{
 h1{
   text-align:center;
   color:var(--gold);
-  margin-bottom:20px;
 }
 
 .card{
   background:var(--card);
   border-radius:16px;
-  padding:25px;
+  padding:20px;
   margin:20px 0;
-  box-shadow:0 10px 40px rgba(0,0,0,0.5);
+  box-shadow:0 10px 30px rgba(0,0,0,0.4);
 }
 
 input,button{
@@ -69,17 +68,15 @@ button{
 
 .good{background:#065f46;}
 .bad{background:#7f1d1d;}
-.neutral{background:#334155;}
 
 .section-title{
   color:var(--gold);
-  margin-bottom:10px;
 }
 
 .ad{
   background:#111827;
   border:1px dashed #334155;
-  padding:20px;
+  padding:15px;
   text-align:center;
   margin:20px 0;
   border-radius:10px;
@@ -92,7 +89,7 @@ button{
 
 <div class="container">
 
-<h1>✨ Lucky Numbers Calculator</h1>
+<h1>✨ Lucky Number Calculator</h1>
 
 <div class="card">
 <input type="text" id="name" placeholder="Enter your full name">
@@ -107,9 +104,8 @@ button{
 <div class="card">
 <h2 class="section-title">📘 About Numerology</h2>
 <p>
-Numerology is an ancient science that reveals hidden meanings behind numbers.
-Your name and birth date carry vibrations that influence your life path,
-success, and relationships.
+Numerology reveals hidden meanings behind numbers in your name and birth date.
+It helps understand personality, success patterns, and life direction.
 </p>
 </div>
 
@@ -142,10 +138,10 @@ const ROOT_MEANING={
 2:"Emotional, intuitive",
 3:"Creative, expressive",
 4:"Practical, hardworking",
-5:"Freedom lover",
+5:"Freedom loving",
 6:"Family oriented",
 7:"Spiritual thinker",
-8:"Power and money",
+8:"Power and success",
 9:"Humanitarian"
 };
 
@@ -205,17 +201,46 @@ function calculate(){
 
   html+=`</div>`;
 
+  /* 🔥 WHAT YOUR NAME MEANS (IMPORTANT) */
+  html+=`
+  <div class="card">
+    <h3 class="section-title">🔍 What Your Name Means</h3>
+    <p>
+      The name <b>${name}</b> carries the vibration of number <b>${nameNum}</b>.
+      This influences your personality and destiny.
+    </p>
+
+    <p>
+      People with this number are typically <b>${ROOT_MEANING[root]}</b>.
+    </p>
+
+    ${
+      COMPOUND[nameNum] 
+      ? `<p><b>Special Insight:</b> ${COMPOUND[nameNum]}</p>` 
+      : ''
+    }
+
+    <p>
+      Your life path is connected with 
+      <b>${["leadership","creativity","success","spiritual growth"][root % 4]}</b>.
+    </p>
+  </div>
+  `;
+
+  /* DAILY TIP */
+  const tips=[
+    "Start important work today",
+    "Use your lucky number",
+    "Avoid risky decisions",
+    "Trust your intuition"
+  ];
+
   html+=`<div class="card">
   <h3 class="section-title">💡 Daily Tip</h3>
-  <p>${["Use your lucky number today","Start important work today","Avoid risky decisions"][Math.floor(Math.random()*3)]}</p>
+  <p>${tips[Math.floor(Math.random()*tips.length)]}</p>
   </div>`;
 
-  html+=`<div class="ad">Ad Space (High RPM Area)</div>`;
-
-  html+=`<div class="card">
-  <h3 class="section-title">💰 Is Your Name Lucky?</h3>
-  <p>Numbers like <b>23, 32</b> are very lucky. Numbers like 14 or 26 may need correction.</p>
-  </div>`;
+  html+=`<div class="ad">Ad Space</div>`;
 
   document.getElementById("result").innerHTML=html;
 }
