@@ -1,136 +1,147 @@
-<!-- ONLY KEY PARTS SHOWN HERE DUE TO LENGTH -->
-<!-- I kept your full UI intact, only fixing JS safely -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lucky Number Calculator</title>
+
+<style>
+body {
+  font-family: Arial;
+  background:#0f172a;
+  color:#fff;
+  text-align:center;
+  padding:40px;
+}
+input,button {
+  padding:12px;
+  margin:10px;
+  border-radius:8px;
+  border:none;
+}
+button {
+  background:#f59e0b;
+  cursor:pointer;
+}
+.card {
+  background:#1e293b;
+  padding:20px;
+  margin-top:20px;
+  border-radius:12px;
+}
+</style>
+</head>
+
+<body>
+
+<h1>🔢 Lucky Number Calculator</h1>
+
+<input type="text" id="name" placeholder="Enter your name">
+<br>
+<input type="date" id="dob">
+<br>
+<button onclick="calculate()">Calculate</button>
+
+<div id="result"></div>
 
 <script>
-/* =========================
-   FIXED NAME CALCULATION
-========================= */
-function nameToNumber(name){
-  const letters = name.toUpperCase().replace(/[^A-Z]/g,'').split('');
-  let sum = 0;
-  letters.forEach(l => { sum += CHALDEAN[l] || 0; });
-  return sum; // ✅ keep compound number
-}
-
-/* =========================
-   COMPOUND MEANINGS
-========================= */
-const COMPOUND_MEANINGS = {
-  14:"Karmic debt — instability and change.",
-  16:"Sudden downfall, ego lessons.",
-  18:"Conflicts and hidden enemies.",
-  23:"Royal Star of the Lion — extremely lucky.",
-  26:"Financial struggles and delays.",
-  32:"Creative success and communication power."
+/* =====================
+   CHALDEAN MAP
+===================== */
+const CHALDEAN = {
+A:1,B:2,C:3,D:4,E:5,F:8,G:3,H:5,I:1,
+J:1,K:2,L:3,M:4,N:5,O:7,P:8,Q:1,
+R:2,S:3,T:4,U:6,V:6,W:6,X:5,Y:1,Z:7
 };
 
-/* =========================
-   SAFE RENDER UPDATE
-========================= */
-function renderResults(name, dob){
-
-  const nameNum  = nameToNumber(name);
-  const safeNum  = reduce(nameNum);
-  const data     = NUM_DATA[safeNum] || NUM_DATA[1];
-  const firstName = name.split(' ')[0];
-
-  /* BIG NUMBERS */
-  let nums = [
-    {n: nameNum, label:'Name Number', emoji:'✨', highlight:true},
-  ];
-
-  if(dob){
-    const lp = getLifePath(dob);
-    const personal = getPersonalYear(dob);
-    nums.push(
-      {n: lp, label:'Life Path', emoji:'🌟'},
-      {n: safeNum, label:'Lucky Number', emoji:'🍀'},
-      {n: personal, label:'Personal Year', emoji:'🔮'}
-    );
-  } else {
-    nums.push({n: safeNum, label:'Lucky Number', emoji:'🍀'});
+/* =====================
+   REDUCE FUNCTION
+===================== */
+function reduce(n){
+  while(n>9){
+    n = String(n).split('').reduce((a,b)=>a+Number(b),0);
   }
-
-  document.getElementById('numGrid').innerHTML = nums.map(item=>`
-    <div class="num-card ${item.highlight?'highlight':''}">
-      <div class="num-emoji">${item.emoji}</div>
-      <div class="big-n">${item.n}</div>
-      <div class="num-label">${item.label}</div>
-    </div>
-  `).join('');
-
-  /* NAME MEANING FIX */
-  document.getElementById('nameMeaning').innerHTML =
-    `<strong>${firstName}, your name number is ${nameNum} (${safeNum}).</strong><br/><br/>`
-    + (COMPOUND_MEANINGS[nameNum]
-      ? `<strong>Compound Meaning:</strong> ${COMPOUND_MEANINGS[nameNum]}<br/><br/>`
-      : '')
-    + data.meaning;
-
-  /* FRIENDLY / ENEMY */
-  document.getElementById('fnGrid').innerHTML = [1,2,3,4,5,6,7,8,9].map(n=>{
-    let cls='fn-neutral', label='Neutral';
-    if(data.friendly.includes(n)){ cls='fn-friendly'; label='Friendly'; }
-    else if(data.enemy.includes(n)){ cls='fn-enemy'; label='Enemy'; }
-    return `<div class="fn-num ${cls}">${n}</div>`;
-  }).join('');
-
-  /* COLORS */
-  document.getElementById('colorRow').innerHTML = data.colors.map(c=>`
-    <div class="color-swatch">
-      <div class="swatch-dot" style="background:${c.hex}"></div>
-      <span>${c.name}</span>
-    </div>
-  `).join('');
-
-  /* DAYS */
-  const allDays = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
-  document.getElementById('dayPills').innerHTML = allDays.map(d=>`
-    <span class="day-pill ${data.days.includes(d)?'active':'inactive'}">${d}</span>
-  `).join('');
-
-  /* DATES */
-  document.getElementById('datePills').innerHTML = data.luckyDates.map(d=>`
-    <div class="date-pill">${d}</div>
-  `).join('');
-
-  /* PLANET */
-  document.getElementById('planetRow').innerHTML = `
-    <div class="info-block">
-      <div class="ib-label">Ruling Planet</div>
-      <div class="ib-value">${data.planet}</div>
-    </div>
-  `;
-
-  /* GEM */
-  const g = data.gems;
-  document.getElementById('gemCard').innerHTML = `
-    <div class="gem-icon">${g.icon}</div>
-    <div>
-      <div class="gem-name">${g.name}</div>
-      <div class="gem-desc">${g.desc}</div>
-    </div>
-  `;
-
-  window._shareData = { name:firstName, nameNum, data };
+  return n;
 }
 
-/* =========================
-   DAILY TIP (SAFE)
-========================= */
-const tips = [
-  "Start important work on your lucky day.",
-  "Use your lucky color today.",
-  "Avoid enemy numbers today."
-];
+/* =====================
+   NAME NUMBER
+===================== */
+function nameNumber(name){
+  let sum=0;
+  name.toUpperCase().replace(/[^A-Z]/g,'')
+    .split('')
+    .forEach(l=> sum += CHALDEAN[l] || 0);
+  return sum; // IMPORTANT: no reduction
+}
 
-document.addEventListener("DOMContentLoaded",()=>{
-  const tipBox = document.createElement("div");
-  tipBox.className = "card";
-  tipBox.innerHTML = `
-    <div class="card-title">✦ Daily Lucky Tip</div>
-    <p class="meaning-text">${tips[Math.floor(Math.random()*tips.length)]}</p>
+/* =====================
+   COMPOUND MEANINGS
+===================== */
+const COMPOUND = {
+14:"Karmic debt, instability",
+16:"Sudden fall, ego lessons",
+18:"Conflicts and struggles",
+23:"Extremely lucky number",
+26:"Financial struggles",
+32:"Creative success"
+};
+
+/* =====================
+   ROOT MEANINGS
+===================== */
+const ROOT = {
+1:"Leader, ambitious",
+2:"Sensitive, emotional",
+3:"Creative, expressive",
+4:"Practical, hardworking",
+5:"Freedom lover",
+6:"Family, harmony",
+7:"Spiritual thinker",
+8:"Power, success",
+9:"Humanitarian"
+};
+
+/* =====================
+   MAIN FUNCTION
+===================== */
+function calculate(){
+  const name = document.getElementById("name").value.trim();
+  const dob = document.getElementById("dob").value;
+
+  if(!name){
+    alert("Enter name");
+    return;
+  }
+
+  const nameNum = nameNumber(name);
+  const root = reduce(nameNum);
+
+  let html = `
+  <div class="card">
+  <h2>Name Number: ${nameNum}</h2>
+  <h3>Root Number: ${root}</h3>
   `;
-  document.querySelector(".wrapper").appendChild(tipBox);
-});
+
+  if(COMPOUND[nameNum]){
+    html += `<p><b>Compound Meaning:</b> ${COMPOUND[nameNum]}</p>`;
+  }
+
+  html += `<p><b>Meaning:</b> ${ROOT[root]}</p>`;
+
+  if(dob){
+    const d = new Date(dob);
+    const life = reduce(
+      d.getDate() + (d.getMonth()+1) + d.getFullYear()
+    );
+    html += `<p><b>Life Path:</b> ${life}</p>`;
+  }
+
+  html += "</div>";
+
+  document.getElementById("result").innerHTML = html;
+}
 </script>
+
+</body>
+</html>
