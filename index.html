@@ -4,24 +4,40 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Lucky Numbers Calculator</title>
+<title>Lucky Number Calculator | Free Numerology Reading</title>
 
 <style>
+:root{
+  --gold:#facc15;
+  --bg:#020617;
+  --card:#0f172a;
+}
+
 body{
+  margin:0;
   font-family: 'Segoe UI', sans-serif;
-  background: linear-gradient(135deg,#0f172a,#020617);
-  color:#fff;
-  text-align:center;
-  padding:30px;
+  background: radial-gradient(circle at top,#0f172a,#020617);
+  color:#e2e8f0;
 }
 
 .container{
-  max-width:600px;
+  max-width:900px;
   margin:auto;
+  padding:20px;
 }
 
 h1{
-  color:#facc15;
+  text-align:center;
+  color:var(--gold);
+  margin-bottom:20px;
+}
+
+.card{
+  background:var(--card);
+  border-radius:16px;
+  padding:25px;
+  margin:20px 0;
+  box-shadow:0 10px 40px rgba(0,0,0,0.5);
 }
 
 input,button{
@@ -30,43 +46,45 @@ input,button{
   margin:10px 0;
   border-radius:10px;
   border:none;
-  font-size:16px;
 }
 
 button{
-  background:#facc15;
-  color:#000;
+  background:linear-gradient(135deg,#facc15,#eab308);
   font-weight:bold;
   cursor:pointer;
 }
 
-.card{
-  background:#1e293b;
-  padding:20px;
-  margin-top:20px;
-  border-radius:14px;
-  box-shadow:0 0 20px rgba(0,0,0,0.5);
-}
-
-.highlight{
-  color:#facc15;
-  font-size:28px;
-}
-
-.small{
-  color:#94a3b8;
+.big{
+  font-size:48px;
+  color:var(--gold);
+  font-weight:bold;
 }
 
 .tag{
   display:inline-block;
-  padding:6px 12px;
+  padding:6px 14px;
   margin:5px;
   border-radius:20px;
-  background:#334155;
 }
 
 .good{background:#065f46;}
 .bad{background:#7f1d1d;}
+.neutral{background:#334155;}
+
+.section-title{
+  color:var(--gold);
+  margin-bottom:10px;
+}
+
+.ad{
+  background:#111827;
+  border:1px dashed #334155;
+  padding:20px;
+  text-align:center;
+  margin:20px 0;
+  border-radius:10px;
+  font-size:12px;
+}
 </style>
 </head>
 
@@ -74,30 +92,36 @@ button{
 
 <div class="container">
 
-<h1>✨ Lucky Number Calculator</h1>
+<h1>✨ Lucky Numbers Calculator</h1>
 
+<div class="card">
 <input type="text" id="name" placeholder="Enter your full name">
 <input type="date" id="dob">
-
 <button onclick="calculate()">Reveal My Numbers</button>
+</div>
+
+<div class="ad">Ad Space (Add AdSense later)</div>
 
 <div id="result"></div>
+
+<div class="card">
+<h2 class="section-title">📘 About Numerology</h2>
+<p>
+Numerology is an ancient science that reveals hidden meanings behind numbers.
+Your name and birth date carry vibrations that influence your life path,
+success, and relationships.
+</p>
+</div>
 
 </div>
 
 <script>
-/* =========================
-   CHALDEAN MAP
-========================= */
-const CHALDEAN = {
+const CHALDEAN={
 A:1,B:2,C:3,D:4,E:5,F:8,G:3,H:5,I:1,
 J:1,K:2,L:3,M:4,N:5,O:7,P:8,Q:1,
 R:2,S:3,T:4,U:6,V:6,W:6,X:5,Y:1,Z:7
 };
 
-/* =========================
-   REDUCE
-========================= */
 function reduce(n){
   while(n>9){
     n = String(n).split('').reduce((a,b)=>a+Number(b),0);
@@ -105,9 +129,6 @@ function reduce(n){
   return n;
 }
 
-/* =========================
-   NAME NUMBER
-========================= */
 function getNameNumber(name){
   let sum=0;
   name.toUpperCase().replace(/[^A-Z]/g,'')
@@ -116,118 +137,87 @@ function getNameNumber(name){
   return sum;
 }
 
-/* =========================
-   DATA
-========================= */
 const ROOT_MEANING={
-1:"Leader, independent, ambitious",
-2:"Sensitive, emotional, intuitive",
-3:"Creative, expressive, joyful",
-4:"Hardworking, practical, disciplined",
-5:"Freedom loving, smart, adaptable",
-6:"Family, love, harmony",
-7:"Spiritual, thinker, introvert",
-8:"Power, money, authority",
-9:"Humanitarian, compassionate"
+1:"Leader, ambitious",
+2:"Emotional, intuitive",
+3:"Creative, expressive",
+4:"Practical, hardworking",
+5:"Freedom lover",
+6:"Family oriented",
+7:"Spiritual thinker",
+8:"Power and money",
+9:"Humanitarian"
 };
 
 const COMPOUND={
-14:"Karmic debt, instability and change",
-16:"Sudden downfall, ego lessons",
-18:"Conflicts and struggles",
-23:"Extremely lucky number (Royal Star)",
+14:"Karmic debt, instability",
+16:"Sudden downfall",
+18:"Conflicts",
+23:"Very lucky number",
 26:"Financial struggles",
-32:"Creative success and communication"
+32:"Creative success"
 };
 
 const FRIENDLY={
-1:[1,2,4,7],
-2:[1,2,7],
-3:[3,6,9],
-4:[1,4,8],
-5:[1,2,3,4,5,6,7,8,9],
-6:[3,6,9],
-7:[1,2,7],
-8:[1,4,8],
-9:[3,6,9]
+1:[1,2,4,7],2:[1,2,7],3:[3,6,9],
+4:[1,4,8],5:[1,2,3,4,5,6,7,8,9],
+6:[3,6,9],7:[1,2,7],8:[1,4,8],9:[3,6,9]
 };
 
 const ENEMY={
-1:[6,8],
-2:[8,9],
-3:[4,7],
-4:[3,6],
-5:[],
-6:[1,8],
-7:[8],
-8:[2,6],
-9:[4,7]
+1:[6,8],2:[8,9],3:[4,7],
+4:[3,6],5:[],6:[1,8],
+7:[8],8:[2,6],9:[4,7]
 };
 
-/* =========================
-   CALCULATE
-========================= */
 function calculate(){
 
-  const name = document.getElementById("name").value.trim();
-  const dob = document.getElementById("dob").value;
+  const name=document.getElementById("name").value.trim();
+  const dob=document.getElementById("dob").value;
 
-  if(!name){
-    alert("Please enter your name");
-    return;
-  }
+  if(!name){alert("Enter name");return;}
 
-  const nameNum = getNameNumber(name);
-  const root = reduce(nameNum);
+  const nameNum=getNameNumber(name);
+  const root=reduce(nameNum);
 
-  let html = `<div class="card">`;
+  let html=`<div class="card">`;
 
-  html += `<div class="highlight">${nameNum}</div>`;
-  html += `<p class="small">Root Number: ${root}</p>`;
+  html+=`<div class="big">${nameNum}</div>`;
+  html+=`<p>Root Number: ${root}</p>`;
 
   if(COMPOUND[nameNum]){
-    html += `<p><b>Compound Meaning:</b> ${COMPOUND[nameNum]}</p>`;
+    html+=`<p><b>Compound Meaning:</b> ${COMPOUND[nameNum]}</p>`;
   }
 
-  html += `<p><b>Meaning:</b> ${ROOT_MEANING[root]}</p>`;
+  html+=`<p><b>Meaning:</b> ${ROOT_MEANING[root]}</p>`;
 
-  /* LIFE PATH */
   if(dob){
-    const d = new Date(dob);
-    const life = reduce(
-      d.getDate() + (d.getMonth()+1) + d.getFullYear()
-    );
-    html += `<p><b>Life Path Number:</b> ${life}</p>`;
+    const d=new Date(dob);
+    const life=reduce(d.getDate()+(d.getMonth()+1)+d.getFullYear());
+    html+=`<p><b>Life Path:</b> ${life}</p>`;
   }
 
-  /* FRIENDLY */
-  html += `<h3>Friendly Numbers</h3>`;
-  FRIENDLY[root].forEach(n=>{
-    html += `<span class="tag good">${n}</span>`;
-  });
+  html+=`<h3 class="section-title">✨ Friendly Numbers</h3>`;
+  FRIENDLY[root].forEach(n=>html+=`<span class="tag good">${n}</span>`);
 
-  /* ENEMY */
-  html += `<h3>Enemy Numbers</h3>`;
-  ENEMY[root].forEach(n=>{
-    html += `<span class="tag bad">${n}</span>`;
-  });
+  html+=`<h3 class="section-title">⚠ Enemy Numbers</h3>`;
+  ENEMY[root].forEach(n=>html+=`<span class="tag bad">${n}</span>`);
 
-  /* LUCKY TIP */
-  const tips=[
-    "Start work on your lucky day",
-    "Use your lucky number in decisions",
-    "Avoid enemy numbers today",
-    "Trust your intuition"
-  ];
+  html+=`</div>`;
 
-  html += `<div class="card" style="margin-top:20px;">
-  <h3>✨ Daily Tip</h3>
-  <p>${tips[Math.floor(Math.random()*tips.length)]}</p>
+  html+=`<div class="card">
+  <h3 class="section-title">💡 Daily Tip</h3>
+  <p>${["Use your lucky number today","Start important work today","Avoid risky decisions"][Math.floor(Math.random()*3)]}</p>
   </div>`;
 
-  html += `</div>`;
+  html+=`<div class="ad">Ad Space (High RPM Area)</div>`;
 
-  document.getElementById("result").innerHTML = html;
+  html+=`<div class="card">
+  <h3 class="section-title">💰 Is Your Name Lucky?</h3>
+  <p>Numbers like <b>23, 32</b> are very lucky. Numbers like 14 or 26 may need correction.</p>
+  </div>`;
+
+  document.getElementById("result").innerHTML=html;
 }
 </script>
 
