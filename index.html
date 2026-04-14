@@ -1,176 +1,1142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>Lucky Numbers & Horoscope | Mystic Numbers</title>
+<meta name="description" content="Free Chaldean numerology calculator, daily horoscope, weekly horoscope, yearly horoscope and lucky name correction. Discover your cosmic destiny."/>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;900&family=Crimson+Pro:ital,wght@0,300;0,400;1,300&display=swap" rel="stylesheet"/>
+<style>
+/* ── RESET & BASE ── */
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{
+  background:#07070f;
+  color:#e8dfc8;
+  font-family:'Crimson Pro',Georgia,serif;
+  font-size:18px;
+  line-height:1.7;
+  min-height:100vh;
+  overflow-x:hidden;
+}
+
+/* ── CSS VARS ── */
+:root{
+  --gold:#c9a84c;
+  --gold-light:#f0d080;
+  --gold-dim:#7a6030;
+  --deep:#07070f;
+  --surface:#0e0e1e;
+  --surface2:#14142a;
+  --border:rgba(201,168,76,0.18);
+  --text:#e8dfc8;
+  --text-dim:#9a8f7a;
+  --glow:rgba(201,168,76,0.15);
+  --star:rgba(255,255,220,0.7);
+  --radius:14px;
+}
+
+/* ── STARFIELD ── */
+.stars{
+  position:fixed;inset:0;pointer-events:none;z-index:0;
+  background:
+    radial-gradient(1px 1px at 10% 15%,var(--star) 0%,transparent 100%),
+    radial-gradient(1px 1px at 25% 40%,var(--star) 0%,transparent 100%),
+    radial-gradient(1.5px 1.5px at 40% 8%,var(--star) 0%,transparent 100%),
+    radial-gradient(1px 1px at 55% 60%,var(--star) 0%,transparent 100%),
+    radial-gradient(1px 1px at 70% 25%,var(--star) 0%,transparent 100%),
+    radial-gradient(1.5px 1.5px at 85% 70%,var(--star) 0%,transparent 100%),
+    radial-gradient(1px 1px at 90% 10%,var(--star) 0%,transparent 100%),
+    radial-gradient(1px 1px at 15% 80%,var(--star) 0%,transparent 100%),
+    radial-gradient(1px 1px at 30% 90%,var(--star) 0%,transparent 100%),
+    radial-gradient(1.5px 1.5px at 60% 85%,var(--star) 0%,transparent 100%),
+    radial-gradient(1px 1px at 75% 50%,var(--star) 0%,transparent 100%),
+    radial-gradient(1px 1px at 45% 75%,var(--star) 0%,transparent 100%),
+    radial-gradient(1px 1px at 5% 55%,var(--star) 0%,transparent 100%),
+    radial-gradient(2px 2px at 95% 45%,rgba(255,220,100,0.4) 0%,transparent 100%),
+    radial-gradient(1.5px 1.5px at 50% 30%,var(--star) 0%,transparent 100%);
+}
+
+/* ── NEBULA ── */
+.nebula{
+  position:fixed;inset:0;pointer-events:none;z-index:0;
+  background:
+    radial-gradient(ellipse 80% 50% at 20% 20%,rgba(80,20,120,0.25) 0%,transparent 60%),
+    radial-gradient(ellipse 60% 70% at 80% 80%,rgba(20,60,120,0.2) 0%,transparent 60%),
+    radial-gradient(ellipse 50% 40% at 60% 10%,rgba(120,60,0,0.15) 0%,transparent 50%);
+}
+
+/* ── LAYOUT ── */
+.wrap{position:relative;z-index:1;max-width:860px;margin:0 auto;padding:0 20px 80px}
+
+/* ── HEADER ── */
+header{
+  text-align:center;
+  padding:60px 0 40px;
+  position:relative;
+}
+.logo-glyph{
+  font-size:52px;
+  display:block;
+  margin-bottom:12px;
+  filter:drop-shadow(0 0 20px var(--gold));
+  animation:pulse 4s ease-in-out infinite;
+}
+@keyframes pulse{
+  0%,100%{filter:drop-shadow(0 0 18px var(--gold))}
+  50%{filter:drop-shadow(0 0 35px var(--gold-light))}
+}
+header h1{
+  font-family:'Cinzel',serif;
+  font-size:clamp(28px,6vw,52px);
+  font-weight:900;
+  letter-spacing:0.06em;
+  background:linear-gradient(135deg,var(--gold-light) 0%,var(--gold) 50%,#8a6020 100%);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+  line-height:1.15;
+}
+.tagline{
+  font-size:15px;
+  color:var(--text-dim);
+  letter-spacing:0.2em;
+  text-transform:uppercase;
+  margin-top:10px;
+  font-weight:300;
+}
+.divider{
+  width:160px;height:1px;
+  background:linear-gradient(90deg,transparent,var(--gold),transparent);
+  margin:22px auto;
+}
+
+/* ── NAV TABS ── */
+.tab-nav{
+  display:flex;gap:4px;
+  background:var(--surface);
+  border:1px solid var(--border);
+  border-radius:50px;
+  padding:4px;
+  margin:30px 0;
+  overflow-x:auto;
+  scrollbar-width:none;
+}
+.tab-nav::-webkit-scrollbar{display:none}
+.tab-btn{
+  flex:1;min-width:fit-content;
+  padding:10px 16px;
+  background:transparent;
+  border:none;
+  border-radius:50px;
+  color:var(--text-dim);
+  font-family:'Cinzel',serif;
+  font-size:12px;
+  letter-spacing:0.08em;
+  cursor:pointer;
+  transition:all 0.3s;
+  white-space:nowrap;
+}
+.tab-btn.active{
+  background:linear-gradient(135deg,#2a1f00,#3d2e00);
+  color:var(--gold-light);
+  box-shadow:0 0 20px rgba(201,168,76,0.2),inset 0 1px 0 rgba(255,255,255,0.05);
+}
+.tab-btn:hover:not(.active){color:var(--gold);background:rgba(201,168,76,0.05)}
+
+/* ── PANELS ── */
+.panel{display:none;animation:fadeUp 0.5s ease}
+.panel.active{display:block}
+@keyframes fadeUp{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
+
+/* ── CARD ── */
+.card{
+  background:var(--surface);
+  border:1px solid var(--border);
+  border-radius:var(--radius);
+  padding:28px 30px;
+  margin-bottom:18px;
+  position:relative;
+  overflow:hidden;
+  transition:border-color 0.3s;
+}
+.card::before{
+  content:'';position:absolute;inset:0;
+  background:linear-gradient(135deg,rgba(201,168,76,0.03) 0%,transparent 60%);
+  pointer-events:none;
+}
+.card:hover{border-color:rgba(201,168,76,0.35)}
+.card h2{
+  font-family:'Cinzel',serif;
+  font-size:16px;
+  letter-spacing:0.1em;
+  color:var(--gold);
+  margin-bottom:18px;
+  display:flex;align-items:center;gap:10px;
+}
+.card h3{
+  font-family:'Cinzel',serif;
+  font-size:14px;
+  letter-spacing:0.08em;
+  color:var(--gold);
+  margin-bottom:10px;
+}
+
+/* ── FORM ELEMENTS ── */
+.field{margin-bottom:18px}
+label{
+  display:block;
+  font-size:13px;
+  letter-spacing:0.12em;
+  text-transform:uppercase;
+  color:var(--gold-dim);
+  margin-bottom:7px;
+  font-family:'Cinzel',serif;
+}
+input[type=text],input[type=date],select{
+  width:100%;
+  background:var(--surface2);
+  border:1px solid rgba(201,168,76,0.2);
+  border-radius:8px;
+  padding:13px 16px;
+  color:var(--text);
+  font-family:'Crimson Pro',serif;
+  font-size:17px;
+  outline:none;
+  transition:border-color 0.3s,box-shadow 0.3s;
+  -webkit-appearance:none;
+}
+input:focus,select:focus{
+  border-color:var(--gold);
+  box-shadow:0 0 0 3px rgba(201,168,76,0.1);
+}
+input[type=date]::-webkit-calendar-picker-indicator{filter:invert(0.7)}
+select option{background:#1a1a2e}
+
+/* ── BUTTONS ── */
+.btn{
+  display:inline-flex;align-items:center;gap:8px;
+  padding:13px 28px;
+  background:linear-gradient(135deg,#3d2e00,#c9a84c,#3d2e00);
+  background-size:200% auto;
+  background-position:0% 50%;
+  border:none;border-radius:50px;
+  color:#07070f;
+  font-family:'Cinzel',serif;
+  font-size:13px;
+  font-weight:600;
+  letter-spacing:0.1em;
+  cursor:pointer;
+  transition:background-position 0.4s,box-shadow 0.3s,transform 0.15s;
+  width:100%;
+  justify-content:center;
+  margin-top:4px;
+}
+.btn:hover{
+  background-position:100% 50%;
+  box-shadow:0 0 30px rgba(201,168,76,0.4);
+  transform:translateY(-1px);
+}
+.btn:active{transform:translateY(0)}
+.btn-sm{
+  padding:9px 20px;font-size:12px;
+  width:auto;background-size:200% auto;
+}
+.btn-ghost{
+  background:transparent;
+  border:1px solid var(--border);
+  color:var(--gold);
+  background-image:none;
+}
+.btn-ghost:hover{background:rgba(201,168,76,0.07);box-shadow:none}
+.btn-row{display:flex;gap:10px;flex-wrap:wrap;margin-top:10px}
+
+/* ── RESULT BIG NUMBER ── */
+.big-num{
+  font-family:'Cinzel',serif;
+  font-size:88px;
+  font-weight:900;
+  line-height:1;
+  background:linear-gradient(135deg,var(--gold-light),var(--gold));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+  text-align:center;
+  text-shadow:none;
+  filter:drop-shadow(0 0 30px rgba(201,168,76,0.5));
+  display:block;
+  margin:10px 0;
+}
+.result-grid{
+  display:grid;grid-template-columns:1fr 1fr;gap:14px;
+  margin:18px 0;
+}
+.result-chip{
+  background:var(--surface2);
+  border:1px solid var(--border);
+  border-radius:10px;
+  padding:14px 16px;
+  text-align:center;
+}
+.result-chip .chip-label{
+  font-size:11px;letter-spacing:0.15em;
+  text-transform:uppercase;color:var(--text-dim);
+  font-family:'Cinzel',serif;
+}
+.result-chip .chip-val{
+  font-family:'Cinzel',serif;
+  font-size:24px;color:var(--gold-light);
+  margin-top:4px;
+}
+
+/* ── LUCK BADGE ── */
+.luck-badge{
+  display:inline-flex;align-items:center;gap:8px;
+  padding:8px 20px;border-radius:50px;
+  font-family:'Cinzel',serif;font-size:13px;letter-spacing:0.1em;
+  margin:12px 0;
+}
+.luck-very{background:rgba(80,200,80,0.12);border:1px solid rgba(80,200,80,0.3);color:#6fda6f}
+.luck-good{background:rgba(201,168,76,0.12);border:1px solid rgba(201,168,76,0.3);color:var(--gold)}
+.luck-neutral{background:rgba(150,150,150,0.1);border:1px solid rgba(150,150,150,0.2);color:#aaa}
+.luck-bad{background:rgba(220,60,60,0.1);border:1px solid rgba(220,60,60,0.25);color:#e07070}
+
+/* ── SUGGESTION PILLS ── */
+.sug-grid{display:flex;flex-wrap:wrap;gap:10px;margin-top:10px}
+.sug-pill{
+  background:var(--surface2);
+  border:1px solid var(--border);
+  border-radius:50px;
+  padding:8px 18px;
+  font-size:15px;
+  cursor:pointer;
+  transition:all 0.25s;
+  display:flex;align-items:center;gap:8px;
+}
+.sug-pill:hover{border-color:var(--gold);color:var(--gold-light)}
+.sug-pill span{
+  background:rgba(201,168,76,0.15);
+  border-radius:50px;
+  padding:2px 10px;
+  font-family:'Cinzel',serif;
+  font-size:12px;
+  color:var(--gold);
+}
+
+/* ── ZODIAC GRID ── */
+.zodiac-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(130px,1fr));
+  gap:10px;
+  margin:16px 0;
+}
+.zodiac-card{
+  background:var(--surface2);
+  border:1px solid var(--border);
+  border-radius:12px;
+  padding:16px 12px;
+  text-align:center;
+  cursor:pointer;
+  transition:all 0.25s;
+}
+.zodiac-card:hover,.zodiac-card.selected{
+  border-color:var(--gold);
+  background:rgba(201,168,76,0.07);
+  transform:translateY(-2px);
+  box-shadow:0 8px 24px rgba(201,168,76,0.15);
+}
+.zodiac-card .zc-sign{font-size:32px;display:block;margin-bottom:6px}
+.zodiac-card .zc-name{
+  font-family:'Cinzel',serif;font-size:11px;
+  letter-spacing:0.08em;color:var(--text-dim);
+}
+.zodiac-card.selected .zc-name{color:var(--gold)}
+
+/* ── HOROSCOPE PERIOD TABS ── */
+.period-tabs{display:flex;gap:6px;margin:14px 0}
+.period-btn{
+  padding:8px 18px;
+  background:var(--surface2);
+  border:1px solid var(--border);
+  border-radius:50px;
+  color:var(--text-dim);
+  font-family:'Cinzel',serif;
+  font-size:11px;letter-spacing:0.1em;
+  cursor:pointer;transition:all 0.25s;
+}
+.period-btn.active{
+  background:rgba(201,168,76,0.12);
+  border-color:var(--gold);
+  color:var(--gold-light);
+}
+
+/* ── AI OUTPUT ── */
+.ai-output{
+  background:var(--surface2);
+  border:1px solid var(--border);
+  border-radius:12px;
+  padding:22px 24px;
+  margin-top:16px;
+  font-size:17px;
+  line-height:1.8;
+  color:var(--text);
+  min-height:80px;
+  position:relative;
+}
+.ai-output p{margin-bottom:12px}
+.ai-output p:last-child{margin-bottom:0}
+.ai-output h4{
+  font-family:'Cinzel',serif;
+  font-size:14px;color:var(--gold);
+  margin:16px 0 8px;letter-spacing:0.08em;
+}
+
+/* ── LOADER ── */
+.loader{
+  display:flex;align-items:center;gap:6px;
+  color:var(--text-dim);font-size:15px;padding:16px 0;
+}
+.dot{
+  width:6px;height:6px;background:var(--gold);border-radius:50%;
+  animation:blink 1.2s ease-in-out infinite;
+}
+.dot:nth-child(2){animation-delay:.2s}
+.dot:nth-child(3){animation-delay:.4s}
+@keyframes blink{0%,100%{opacity:0.2}50%{opacity:1}}
+
+/* ── SECTION DIVIDER ── */
+.section-label{
+  font-family:'Cinzel',serif;
+  font-size:11px;letter-spacing:0.22em;
+  text-transform:uppercase;
+  color:var(--gold-dim);
+  margin:8px 0 16px;
+  display:flex;align-items:center;gap:12px;
+}
+.section-label::before,.section-label::after{
+  content:'';flex:1;height:1px;
+  background:linear-gradient(90deg,transparent,var(--gold-dim),transparent);
+}
+
+/* ── SHARE ROW ── */
+.share-row{display:flex;gap:8px;flex-wrap:wrap;margin-top:4px}
+.share-btn{
+  flex:1;min-width:100px;
+  padding:11px 16px;
+  border-radius:10px;
+  border:1px solid var(--border);
+  background:var(--surface2);
+  color:var(--text-dim);
+  font-family:'Cinzel',serif;font-size:11px;
+  letter-spacing:0.08em;cursor:pointer;
+  transition:all 0.25s;display:flex;
+  align-items:center;justify-content:center;gap:6px;
+}
+.share-btn:hover{border-color:var(--gold);color:var(--gold)}
+.share-wa{color:#25d366!important}.share-wa:hover{border-color:#25d366!important}
+.share-x{color:#aaa!important}.share-x:hover{border-color:#aaa!important}
+
+/* ── INFO BLOCKS ── */
+.meaning-row{
+  display:flex;gap:16px;margin:12px 0;
+  padding:14px;background:rgba(201,168,76,0.04);
+  border-radius:10px;border-left:2px solid var(--gold-dim);
+}
+.meaning-row .mr-num{
+  font-family:'Cinzel',serif;font-size:28px;
+  color:var(--gold);min-width:40px;line-height:1.1;
+}
+.meaning-row .mr-text{font-size:16px;color:var(--text-dim)}
+
+/* ── FOOTER ── */
+footer{
+  text-align:center;
+  padding:40px 20px;
+  color:var(--text-dim);
+  font-size:13px;
+  border-top:1px solid var(--border);
+  margin-top:40px;
+}
+footer a{color:var(--gold-dim);text-decoration:none}
+footer a:hover{color:var(--gold)}
+
+/* ── RESPONSIVE ── */
+@media(max-width:560px){
+  .result-grid{grid-template-columns:1fr 1fr}
+  .card{padding:20px 18px}
+  .big-num{font-size:66px}
+  .zodiac-grid{grid-template-columns:repeat(4,1fr)}
+  .zodiac-card{padding:12px 6px}
+  .zodiac-card .zc-sign{font-size:24px}
+  .zodiac-card .zc-name{font-size:9px}
+  .period-tabs{flex-wrap:wrap}
+}
+
+/* ── TOAST ── */
+#toast{
+  position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(30px);
+  background:rgba(201,168,76,0.15);
+  border:1px solid var(--gold);
+  color:var(--gold-light);
+  padding:10px 24px;
+  border-radius:50px;
+  font-family:'Cinzel',serif;font-size:13px;
+  opacity:0;transition:all 0.4s;z-index:999;pointer-events:none;
+  backdrop-filter:blur(10px);
+}
+#toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+
+/* ── AD PLACEHOLDER ── */
+.ad-slot{
+  background:rgba(201,168,76,0.03);
+  border:1px dashed var(--gold-dim);
+  border-radius:12px;
+  padding:20px;
+  text-align:center;
+  color:var(--gold-dim);
+  font-size:13px;
+  letter-spacing:0.1em;
+  font-family:'Cinzel',serif;
+  margin:18px 0;
+}
+</style>
+</head>
+<body>
+
+<div class="stars"></div>
+<div class="nebula"></div>
+
+<div class="wrap">
+
+<!-- ══ HEADER ══ -->
+<header>
+  <span class="logo-glyph">☽ ✦ ☾</span>
+  <h1>Mystic Numbers</h1>
+  <p class="tagline">Numerology · Astrology · Cosmic Insight</p>
+  <div class="divider"></div>
+</header>
+
+<!-- ══ MAIN NAV ══ -->
+<div class="tab-nav" role="tablist">
+  <button class="tab-btn active" onclick="switchTab('num')" id="tab-num">⟁ Numerology</button>
+  <button class="tab-btn" onclick="switchTab('horo')" id="tab-horo">☽ Horoscope</button>
+  <button class="tab-btn" onclick="switchTab('comp')" id="tab-comp">♋ Compatibility</button>
+  <button class="tab-btn" onclick="switchTab('ai')" id="tab-ai">✦ AI Reading</button>
+</div>
+
+<!-- ══════════════════════════════
+     PANEL 1 — NUMEROLOGY
+══════════════════════════════ -->
+<div class="panel active" id="panel-num">
+
+  <div class="card">
+    <h2>⟁ Chaldean Name Calculator</h2>
+
+    <div class="field">
+      <label>Your Full Name</label>
+      <input type="text" id="num-name" placeholder="e.g. Mohammed Al Rashid" autocomplete="off"/>
+    </div>
+    <div class="field">
+      <label>Date of Birth <small style="font-size:11px;color:var(--text-dim)">(optional)</small></label>
+      <input type="date" id="num-dob"/>
+    </div>
+    <button class="btn" onclick="calcNum()">✦ Reveal My Numbers</button>
+  </div>
+
+  <div id="num-result"></div>
+
+  <!-- Quick Reference -->
+  <div class="card">
+    <h2>📖 Number Meanings at a Glance</h2>
+    <div id="num-ref"></div>
+  </div>
+
+</div>
+
+
+<!-- ══════════════════════════════
+     PANEL 2 — HOROSCOPE
+══════════════════════════════ -->
+<div class="panel" id="panel-horo">
+
+  <div class="card">
+    <h2>☽ Your Horoscope</h2>
+    <p style="color:var(--text-dim);font-size:15px;margin-bottom:16px">Choose your sign and period for an AI-generated cosmic reading.</p>
+
+    <div class="zodiac-grid" id="zodiac-grid"></div>
+
+    <div class="period-tabs">
+      <button class="period-btn active" onclick="setPeriod('daily',this)">Daily</button>
+      <button class="period-btn" onclick="setPeriod('weekly',this)">Weekly</button>
+      <button class="period-btn" onclick="setPeriod('monthly',this)">Monthly</button>
+      <button class="period-btn" onclick="setPeriod('yearly',this)">Yearly 2025</button>
+    </div>
+
+    <button class="btn" onclick="getHoroscope()" style="margin-top:10px">✦ Get My Horoscope</button>
+  </div>
+
+  <div id="horo-result"></div>
+
+</div>
+
+
+<!-- ══════════════════════════════
+     PANEL 3 — COMPATIBILITY
+══════════════════════════════ -->
+<div class="panel" id="panel-comp">
+
+  <div class="card">
+    <h2>♋ Name Compatibility</h2>
+    <p style="color:var(--text-dim);font-size:15px;margin-bottom:16px">Find how two names vibrate together in love, business, or friendship.</p>
+
+    <div class="field">
+      <label>Your Name</label>
+      <input type="text" id="comp-name1" placeholder="First person's name" autocomplete="off"/>
+    </div>
+    <div class="field">
+      <label>Their Name</label>
+      <input type="text" id="comp-name2" placeholder="Second person's name" autocomplete="off"/>
+    </div>
+    <div class="field">
+      <label>Relationship Type</label>
+      <select id="comp-type">
+        <option value="love">Love & Romance</option>
+        <option value="business">Business Partnership</option>
+        <option value="friendship">Friendship</option>
+        <option value="marriage">Marriage</option>
+      </select>
+    </div>
+    <button class="btn" onclick="calcCompat()">✦ Check Compatibility</button>
+  </div>
+
+  <div id="comp-result"></div>
+
+</div>
+
+
+<!-- ══════════════════════════════
+     PANEL 4 — AI PERSONAL READING
+══════════════════════════════ -->
+<div class="panel" id="panel-ai">
+
+  <div class="card">
+    <h2>✦ Deep AI Cosmic Reading</h2>
+    <p style="color:var(--text-dim);font-size:15px;margin-bottom:16px">Get a comprehensive personalised numerology + astrology reading powered by AI.</p>
+
+    <div class="field">
+      <label>Full Name</label>
+      <input type="text" id="ai-name" placeholder="Your full name" autocomplete="off"/>
+    </div>
+    <div class="field">
+      <label>Date of Birth</label>
+      <input type="date" id="ai-dob"/>
+    </div>
+    <div class="field">
+      <label>What do you seek guidance on?</label>
+      <select id="ai-topic">
+        <option value="general">General Life Reading</option>
+        <option value="career">Career & Finances</option>
+        <option value="love">Love & Relationships</option>
+        <option value="health">Health & Wellness</option>
+        <option value="spiritual">Spiritual Path</option>
+        <option value="2025">Year 2025 Forecast</option>
+      </select>
+    </div>
+    <button class="btn" onclick="getAIReading()">✦ Generate My Reading</button>
+  </div>
+
+  <div id="ai-result"></div>
+
+</div>
+
+
+<!-- ══ AD SLOT ══ -->
+<div class="ad-slot">[ Advertisement — Google AdSense slot ]</div>
+
+</div><!-- /wrap -->
+
+<!-- ══ FOOTER ══ -->
+<footer>
+  <p>☽ Mystic Numbers ✦ For entertainment purposes · <a href="#">Privacy</a> · <a href="#">Contact</a></p>
+  <p style="margin-top:6px;font-size:11px">© 2025 Mystic Numbers. All readings are for guidance only.</p>
+</footer>
+
+<div id="toast"></div>
+
+<!-- ══════════════════════
+     JAVASCRIPT
+══════════════════════ -->
 <script>
-
-/* =========================
-   RUN AFTER PAGE LOAD (CRITICAL FIX)
-========================= */
-window.onload = function(){
-
-/* =========================
-   GLOBAL
-========================= */
-let SHARE_TEXT="";
-
-/* =========================
-   CHALDEAN MAP
-========================= */
-const MAP={
-A:1,B:2,C:3,D:4,E:5,F:8,G:3,H:5,I:1,
-J:1,K:2,L:3,M:4,N:5,O:7,P:8,Q:1,
-R:2,S:3,T:4,U:6,V:6,W:6,X:5,Y:1,Z:7
+/* ── CHALDEAN MAP ── */
+const CMAP={
+  A:1,B:2,C:3,D:4,E:5,F:8,G:3,H:5,I:1,
+  J:1,K:2,L:3,M:4,N:5,O:7,P:8,Q:1,
+  R:2,S:3,T:4,U:6,V:6,W:6,X:5,Y:1,Z:7
 };
 
-/* =========================
-   FUNCTIONS
-========================= */
+const ROOT_MEAN={
+  1:"Leadership, independence, pioneering spirit.",
+  2:"Sensitivity, diplomacy, intuition.",
+  3:"Creativity, expression, social charisma.",
+  4:"Discipline, structure, hard work.",
+  5:"Freedom, adventure, adaptability.",
+  6:"Love, responsibility, nurturing.",
+  7:"Spiritual depth, wisdom, introspection.",
+  8:"Power, ambition, financial success.",
+  9:"Compassion, humanitarianism, wisdom."
+};
+
+const COMPOUND_MEAN={
+  10:"Wheel of Fortune — achievement after effort.",
+  11:"Hidden dangers — caution in decisions.",
+  12:"Sacrifice, restrictions, learning.",
+  13:"Change and transformation.",
+  14:"Movement, karmic lessons, instability.",
+  15:"Magic and occult influence.",
+  16:"Tower struck by lightning — sudden fall.",
+  17:"Star of the Magi — immortality of name.",
+  18:"Deception, material struggle.",
+  19:"Prince of Heaven — success and happiness.",
+  20:"Awakening, spiritual calling.",
+  21:"Crown of Magi — success and victory.",
+  22:"Submission, fool's folly — caution.",
+  23:"Royal Star of the Lion — very lucky.",
+  24:"Success through love and family.",
+  25:"Strength through experience.",
+  26:"Partnerships bringing downfall.",
+  27:"Command and authority.",
+  28:"Loss through misplaced trust.",
+  29:"Uncertainty and misfortune.",
+  30:"Thoughtfulness, imagination.",
+  31:"Solitude, isolation.",
+  32:"Magic and fortunate circumstances.",
+  33:"Spiritual mastery.",
+  34:"Hard work needed for success.",
+  35:"Good partnerships.",
+  36:"High intellect.",
+  37:"Good friends and partnerships.",
+  38:"Partial success only.",
+  39:"Creative work, success abroad.",
+  40:"Good spiritual life.",
+  41:"Victory through leadership.",
+  42:"Multiple paths, none completed.",
+  43:"Revolution, upheaval.",
+  44:"Material success with effort.",
+  45:"Wisdom of age.",
+  46:"Triumph of mind and will — excellent.",
+  47:"Spiritual protection."
+};
+
+const LUCKY_NUMS=[3,6,9,10,14,19,21,23,24,27,32,37,41,46];
+const VERY_LUCKY=[23,32,41,46,19,21];
+const UNLUCKY_NUMS=[14,16,18,22,26,29];
+
 function reduce(n){
-  while(n>9){
-    n = n.toString().split('').reduce(function(a,b){ return a + Number(b); },0);
-  }
+  while(n>9){n=String(n).split('').reduce((a,b)=>a+ +b,0)}
   return n;
 }
-
-function getNumber(name){
-  let sum=0;
-  name.toUpperCase().replace(/[^A-Z]/g,'')
-  .split('')
-  .forEach(function(l){ sum+=MAP[l]||0; });
-  return sum;
+function nameToNum(name){
+  let s=0;
+  name.toUpperCase().replace(/[^A-Z]/g,'').split('').forEach(l=>s+=CMAP[l]||0);
+  return s;
 }
 
-/* =========================
-   DATA
-========================= */
-const ROOT={
-1:"Leadership and independence.",
-2:"Sensitivity and intuition.",
-3:"Creativity and communication.",
-4:"Discipline and stability.",
-5:"Freedom and adaptability.",
-6:"Love and responsibility.",
-7:"Spiritual thinking.",
-8:"Power and success.",
-9:"Compassion and wisdom."
-};
-
-const COMPOUND={
-14:"Karmic debt and instability.",
-16:"Sudden downfall and lessons.",
-18:"Conflicts and struggles.",
-23:"Very lucky number.",
-26:"Financial struggles.",
-32:"Creative success."
-};
-
-const LUCKY=[23,32,41,46];
-const UNLUCKY=[14,16,26];
-
-/* =========================
-   SMART SUGGESTIONS
-========================= */
-function smartSuggestions(name){
-  const adds=["a","e","i","o","u","h","y","n"];
+/* ── SMART SUGGESTIONS ── */
+function smartSuggest(name){
+  const extras="AEIOUHNYRLS".split('');
   let res=[];
-
-  for(let i=0;i<adds.length;i++){
-    let newName=name+adds[i];
-    let num=getNumber(newName);
-    if(LUCKY.indexOf(num)!==-1){
-      res.push({name:newName,number:num});
-    }
+  for(let c of extras){
+    let n2=name+c.toLowerCase();
+    let num=nameToNum(n2);
+    if(VERY_LUCKY.includes(num)&&res.length<6)res.push({name:n2,num});
+  }
+  // also try removing last char
+  if(name.length>1){
+    let n2=name.slice(0,-1);
+    let num=nameToNum(n2);
+    if(VERY_LUCKY.includes(num))res.unshift({name:n2,num});
   }
   return res.slice(0,5);
 }
 
-/* =========================
-   MAIN FUNCTION
-========================= */
-window.calculate = function(){
+function luckStatus(n){
+  if(VERY_LUCKY.includes(n))return{cls:'luck-very',txt:'⭐ Very Lucky',icon:'⭐'};
+  if(LUCKY_NUMS.includes(n))return{cls:'luck-good',txt:'✓ Lucky',icon:'✓'};
+  if(UNLUCKY_NUMS.includes(n))return{cls:'luck-bad',txt:'⚠ Challenging',icon:'⚠'};
+  return{cls:'luck-neutral',txt:'◇ Neutral',icon:'◇'};
+}
 
-  const name=document.getElementById("name").value.trim();
-  const dob=document.getElementById("dob").value;
+/* ── CALC NUMEROLOGY ── */
+let SHARE_TEXT='';
 
-  if(!name){ alert("Enter name"); return; }
+function calcNum(){
+  const name=document.getElementById('num-name').value.trim();
+  const dob=document.getElementById('num-dob').value;
+  if(!name){showToast('Please enter your name');return;}
 
-  const num=getNumber(name);
+  const num=nameToNum(name);
   const root=reduce(num);
+  const ls=luckStatus(num);
+  const comp=COMPOUND_MEAN[num]||'';
 
-  SHARE_TEXT="My lucky number is "+num+" 🔥 "+window.location.href;
+  SHARE_TEXT=`My Chaldean number is ${num} (${ls.icon}) — discover yours at ${window.location.href}`;
 
-  let html="";
+  let html='';
 
-  html+="<div class='card'>";
-  html+="<div class='big'>"+num+"</div>";
-  html+="<p><b>Root Number:</b> "+root+"</p>";
+  /* Card 1 — Core Result */
+  html+=`<div class="card">
+    <h2>⟁ Your Core Numbers</h2>
+    <span class="big-num">${num}</span>
+    <div class="section-label">Chaldean Name Number</div>
+    <div class="result-grid">
+      <div class="result-chip">
+        <div class="chip-label">Root Number</div>
+        <div class="chip-val">${root}</div>
+      </div>
+      <div class="result-chip">
+        <div class="chip-label">Lucky Status</div>
+        <div class="chip-val" style="font-size:18px">${ls.icon}</div>
+      </div>
+    </div>
+    <div class="luck-badge ${ls.cls}">${ls.txt}</div>
+    ${comp?`<p style="margin-top:12px;color:var(--text-dim);font-size:16px;font-style:italic">"${comp}"</p>`:''}
+    <p style="margin-top:10px;font-size:17px">${ROOT_MEAN[root]}</p>
+  </div>`;
 
-  if(COMPOUND[num]){
-    html+="<p>"+COMPOUND[num]+"</p>";
-  }
-
-  html+="<p>"+ROOT[root]+"</p>";
-  html+="</div>";
-
-  /* NAME MEANING */
-  html+="<div class='card'>";
-  html+="<h3>🔍 What Your Name Represents</h3>";
-  html+="<p><b>"+name+"</b> corresponds to number <b>"+num+"</b>.</p>";
-  html+="<p>"+ROOT[root]+"</p>";
-  html+="<p>This influences your personality and life direction.</p>";
-  html+="</div>";
-
-  /* LUCK */
-  html+="<div class='card'><h3>✨ Lucky Status</h3>";
-  if(LUCKY.indexOf(num)!==-1){
-    html+="<p style='color:lightgreen'>Very Lucky</p>";
-  } else if(UNLUCKY.indexOf(num)!==-1){
-    html+="<p style='color:red'>Not Lucky</p>";
-  } else {
-    html+="<p>Neutral</p>";
-  }
-  html+="</div>";
-
-  /* SUGGESTIONS */
-  const sug=smartSuggestions(name);
-  if(sug.length){
-    html+="<div class='card'><h3>🔧 Lucky Name Suggestions</h3>";
-    for(let i=0;i<sug.length;i++){
-      html+="<p>"+sug[i].name+" → "+sug[i].number+"</p>";
-    }
-    html+="</div>";
-  }
-
-  /* LIFE PATH */
+  /* Card 2 — Life Path */
   if(dob){
     const d=new Date(dob);
-    const life=reduce(d.getDate()+(d.getMonth()+1)+d.getFullYear());
-    html+="<div class='card'><p><b>Life Path:</b> "+life+"</p></div>";
+    const lpRaw=d.getDate()+(d.getMonth()+1)+d.getFullYear();
+    const lp=reduce(lpRaw);
+    const lpLS=luckStatus(lp);
+    html+=`<div class="card">
+      <h2>🌙 Life Path Number</h2>
+      <div class="result-grid">
+        <div class="result-chip">
+          <div class="chip-label">Life Path</div>
+          <div class="chip-val">${lp}</div>
+        </div>
+        <div class="result-chip">
+          <div class="chip-label">Status</div>
+          <div class="chip-val" style="font-size:18px">${lpLS.icon}</div>
+        </div>
+      </div>
+      <p style="margin-top:8px;font-size:17px">${ROOT_MEAN[lp]}</p>
+    </div>`;
   }
 
-  /* SHARE */
-  html+="<div class='card'>";
-  html+="<button onclick='wa()'>WhatsApp</button>";
-  html+="<button onclick='tw()'>X</button>";
-  html+="<button onclick='copyLink()'>Copy Link</button>";
-  html+="</div>";
+  /* Card 3 — Name Meaning */
+  html+=`<div class="card">
+    <h2>🔍 Name Vibration</h2>
+    <p><b style="color:var(--gold-light)">${name}</b> vibrates at number <b style="color:var(--gold-light)">${num}</b>.</p>
+    <p style="margin-top:8px;color:var(--text-dim)">This number shapes your personality, opportunities, and the energy you project to the world. ${ROOT_MEAN[root]}</p>
+  </div>`;
 
-  document.getElementById("result").innerHTML=html;
-};
+  /* Card 4 — Suggestions */
+  const sugs=smartSuggest(name);
+  if(sugs.length){
+    html+=`<div class="card">
+      <h2>🔧 Lucky Name Corrections</h2>
+      <p style="color:var(--text-dim);font-size:15px;margin-bottom:12px">Minor spelling changes to align your name with a very lucky number:</p>
+      <div class="sug-grid">
+        ${sugs.map(s=>`<div class="sug-pill" onclick="useName('${s.name}')">${s.name}<span>${s.num}</span></div>`).join('')}
+      </div>
+    </div>`;
+  }
 
-/* =========================
-   SHARE FUNCTIONS
-========================= */
-window.wa=function(){
-  window.open("https://wa.me/?text="+encodeURIComponent(SHARE_TEXT));
-};
+  /* Card 5 — Share */
+  html+=`<div class="card">
+    <h2>↗ Share Your Number</h2>
+    <div class="share-row">
+      <button class="share-btn share-wa" onclick="shareWA()">📲 WhatsApp</button>
+      <button class="share-btn share-x" onclick="shareTW()">𝕏 Twitter / X</button>
+      <button class="share-btn" onclick="copyLink()">🔗 Copy Link</button>
+    </div>
+  </div>`;
 
-window.tw=function(){
-  window.open("https://twitter.com/intent/tweet?text="+encodeURIComponent(SHARE_TEXT));
-};
+  document.getElementById('num-result').innerHTML=html;
+  document.getElementById('num-result').scrollIntoView({behavior:'smooth',block:'nearest'});
+}
 
-window.copyLink=function(){
-  navigator.clipboard.writeText(window.location.href);
-  alert("Copied!");
-};
+function useName(n){
+  document.getElementById('num-name').value=n;
+  calcNum();
+  showToast('Using: '+n);
+}
 
-}; // END window.onload
+/* ── NUMBER REFERENCE ── */
+(function buildRef(){
+  const el=document.getElementById('num-ref');
+  if(!el)return;
+  let h='';
+  for(let i=1;i<=9;i++){
+    h+=`<div class="meaning-row">
+      <div class="mr-num">${i}</div>
+      <div class="mr-text">${ROOT_MEAN[i]}</div>
+    </div>`;
+  }
+  el.innerHTML=h;
+})();
 
+/* ── ZODIAC SETUP ── */
+const SIGNS=[
+  {name:'Aries',glyph:'♈',emoji:'🔥',dates:'Mar 21–Apr 19'},
+  {name:'Taurus',glyph:'♉',emoji:'🌿',dates:'Apr 20–May 20'},
+  {name:'Gemini',glyph:'♊',emoji:'🌬️',dates:'May 21–Jun 20'},
+  {name:'Cancer',glyph:'♋',emoji:'🌊',dates:'Jun 21–Jul 22'},
+  {name:'Leo',glyph:'♌',emoji:'☀️',dates:'Jul 23–Aug 22'},
+  {name:'Virgo',glyph:'♍',emoji:'🌾',dates:'Aug 23–Sep 22'},
+  {name:'Libra',glyph:'♎',emoji:'⚖️',dates:'Sep 23–Oct 22'},
+  {name:'Scorpio',glyph:'♏',emoji:'🦂',dates:'Oct 23–Nov 21'},
+  {name:'Sagittarius',glyph:'♐',emoji:'🏹',dates:'Nov 22–Dec 21'},
+  {name:'Capricorn',glyph:'♑',emoji:'🏔️',dates:'Dec 22–Jan 19'},
+  {name:'Aquarius',glyph:'♒',emoji:'💨',dates:'Jan 20–Feb 18'},
+  {name:'Pisces',glyph:'♓',emoji:'🐟',dates:'Feb 19–Mar 20'}
+];
+
+let selectedSign=null;
+let selectedPeriod='daily';
+
+(function buildZodiac(){
+  const g=document.getElementById('zodiac-grid');
+  SIGNS.forEach((s,i)=>{
+    const d=document.createElement('div');
+    d.className='zodiac-card';d.id='zc-'+i;
+    d.innerHTML=`<span class="zc-sign">${s.glyph}</span><div class="zc-name">${s.name}</div>`;
+    d.onclick=()=>selectSign(i);
+    g.appendChild(d);
+  });
+})();
+
+function selectSign(i){
+  document.querySelectorAll('.zodiac-card').forEach(c=>c.classList.remove('selected'));
+  document.getElementById('zc-'+i).classList.add('selected');
+  selectedSign=SIGNS[i];
+}
+
+function setPeriod(p,btn){
+  selectedPeriod=p;
+  document.querySelectorAll('.period-btn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+}
+
+/* ── HOROSCOPE via Claude API ── */
+async function getHoroscope(){
+  if(!selectedSign){showToast('Please select your zodiac sign');return;}
+  const res=document.getElementById('horo-result');
+  res.innerHTML=loader('Reading the stars...');
+
+  const today=new Date().toLocaleDateString('en-US',{weekday:'long',year:'numeric',month:'long',day:'numeric'});
+  const period=selectedPeriod;
+  const sign=selectedSign.name;
+
+  const prompt=`You are an experienced, wise astrologer. Write a ${period} horoscope for ${sign} (${selectedSign.dates}).
+
+Today's date: ${today}
+Period: ${period}
+Sign: ${sign} ${selectedSign.glyph}
+
+Structure your response with these clearly labeled sections:
+**Overview** — General energy and theme (2-3 sentences)
+**Love & Relationships** — (2 sentences)
+**Career & Finance** — (2 sentences)
+**Health & Wellbeing** — (1-2 sentences)
+**Lucky Numbers** — List 3 lucky numbers for this period
+**Lucky Colour** — One colour with brief reason
+**Advice** — One powerful, memorable sentence of cosmic wisdom
+
+Write in a warm, mystical but grounded tone. Be specific and insightful, not generic. 200-250 words total.`;
+
+  try{
+    const r=await callClaude(prompt);
+    res.innerHTML=`<div class="card">
+      <h2>${selectedSign.glyph} ${sign} — ${cap(period)} Horoscope</h2>
+      <div class="ai-output">${formatAI(r)}</div>
+      <div class="share-row" style="margin-top:16px">
+        <button class="share-btn share-wa" onclick="shareText('${sign} ${cap(period)} Horoscope from Mystic Numbers: '+encodeURIComponent(window.location.href))">📲 Share</button>
+        <button class="share-btn" onclick="copyLink()">🔗 Copy Link</button>
+      </div>
+    </div>`;
+  }catch(e){
+    res.innerHTML=errCard('Could not load horoscope. Please try again.');
+  }
+}
+
+/* ── COMPATIBILITY ── */
+async function calcCompat(){
+  const n1=document.getElementById('comp-name1').value.trim();
+  const n2=document.getElementById('comp-name2').value.trim();
+  const type=document.getElementById('comp-type').value;
+  if(!n1||!n2){showToast('Enter both names');return;}
+
+  const res=document.getElementById('comp-result');
+  res.innerHTML=loader('Calculating cosmic bond...');
+
+  const num1=nameToNum(n1),num2=nameToNum(n2);
+  const r1=reduce(num1),r2=reduce(num2);
+
+  const prompt=`You are a master numerologist. Analyse the ${type} compatibility between two people based on Chaldean numerology.
+
+Person 1: "${n1}" — Chaldean number ${num1}, root ${r1}
+Person 2: "${n2}" — Chaldean number ${num2}, root ${r2}
+Relationship type: ${type}
+
+Provide:
+**Compatibility Score** — Give a score out of 10 with a one-line verdict
+**Numerological Analysis** — How their numbers interact (3-4 sentences)
+**Strengths** — Top 3 strengths of this pairing
+**Challenges** — 1-2 challenges to be aware of  
+**Advice** — One key recommendation for making this relationship thrive
+
+Be insightful, specific to their numbers, and mystical in tone. 180-220 words.`;
+
+  try{
+    const r=await callClaude(prompt);
+    res.innerHTML=`<div class="card">
+      <h2>♋ Compatibility: ${n1} & ${n2}</h2>
+      <div class="result-grid">
+        <div class="result-chip"><div class="chip-label">${n1}</div><div class="chip-val">${num1}</div></div>
+        <div class="result-chip"><div class="chip-label">${n2}</div><div class="chip-val">${num2}</div></div>
+      </div>
+      <div class="ai-output">${formatAI(r)}</div>
+    </div>`;
+  }catch(e){
+    res.innerHTML=errCard('Could not calculate. Please try again.');
+  }
+}
+
+/* ── AI PERSONAL READING ── */
+async function getAIReading(){
+  const name=document.getElementById('ai-name').value.trim();
+  const dob=document.getElementById('ai-dob').value;
+  const topic=document.getElementById('ai-topic').value;
+  if(!name){showToast('Please enter your name');return;}
+
+  const res=document.getElementById('ai-result');
+  res.innerHTML=loader('Channelling cosmic wisdom...');
+
+  let dobInfo='';
+  let lpInfo='';
+  if(dob){
+    const d=new Date(dob);
+    const lpRaw=d.getDate()+(d.getMonth()+1)+d.getFullYear();
+    const lp=reduce(lpRaw);
+    dobInfo=`Date of Birth: ${d.toLocaleDateString('en-US',{day:'numeric',month:'long',year:'numeric'})}`;
+    lpInfo=`Life Path Number: ${lp} — ${ROOT_MEAN[lp]}`;
+  }
+
+  const num=nameToNum(name);
+  const root=reduce(num);
+  const ls=luckStatus(num);
+
+  const prompt=`You are a renowned numerologist and astrologer. Provide a deep, personalised cosmic reading.
+
+Name: ${name}
+Chaldean Name Number: ${num} (Root: ${root})
+${dobInfo}
+${lpInfo}
+Lucky Status: ${ls.txt}
+Topic Focus: ${topic}
+
+Write a comprehensive reading with these sections:
+**Your Cosmic Profile** — Who you are according to your numbers (3-4 sentences)
+**${cap(topic.replace(/-/g,' '))} Insights** — Detailed guidance on their chosen topic (4-5 sentences)
+**Your Strengths** — 3 key strengths revealed by your numbers
+**Upcoming Opportunities** — What the numbers suggest is coming (2-3 sentences)
+**Numbers to Watch** — Your personal lucky numbers this year
+**Closing Wisdom** — An inspiring, personalised closing message (2 sentences)
+
+Be deeply personal, mystical, insightful, and empowering. Use their name naturally. 280-320 words.`;
+
+  try{
+    const r=await callClaude(prompt);
+    res.innerHTML=`<div class="card">
+      <h2>✦ Cosmic Reading for ${name}</h2>
+      <div class="result-grid">
+        <div class="result-chip"><div class="chip-label">Name Number</div><div class="chip-val">${num}</div></div>
+        <div class="result-chip"><div class="chip-label">Lucky Status</div><div class="chip-val">${ls.icon}</div></div>
+      </div>
+      <div class="ai-output">${formatAI(r)}</div>
+      <div class="share-row" style="margin-top:16px">
+        <button class="share-btn share-wa" onclick="shareWA()">📲 Share</button>
+        <button class="share-btn" onclick="copyLink()">🔗 Copy Link</button>
+      </div>
+    </div>`;
+  }catch(e){
+    res.innerHTML=errCard('Could not generate reading. Please try again.');
+  }
+}
+
+/* ── CLAUDE API CALL ── */
+async function callClaude(prompt){
+  const r=await fetch('https://api.anthropic.com/v1/messages',{
+    method:'POST',
+    headers:{'Content-Type':'application/json'},
+    body:JSON.stringify({
+      model:'claude-sonnet-4-20250514',
+      max_tokens:1000,
+      messages:[{role:'user',content:prompt}]
+    })
+  });
+  const d=await r.json();
+  if(!r.ok)throw new Error(d.error?.message||'API error');
+  return d.content.map(i=>i.text||'').join('');
+}
+
+/* ── HELPERS ── */
+function formatAI(text){
+  // Convert **bold** and newlines to HTML
+  return text
+    .replace(/\*\*(.*?)\*\*/g,'<h4>$1</h4>')
+    .split('\n').filter(l=>l.trim())
+    .map(l=>l.startsWith('<h4>')?l:`<p>${l}</p>`)
+    .join('');
+}
+function loader(msg){
+  return `<div class="card"><div class="loader"><div class="dot"></div><div class="dot"></div><div class="dot"></div><span style="margin-left:4px">${msg}</span></div></div>`;
+}
+function errCard(msg){
+  return `<div class="card"><p style="color:#e07070">⚠ ${msg}</p></div>`;
+}
+function cap(s){return s.charAt(0).toUpperCase()+s.slice(1)}
+
+function shareWA(){window.open('https://wa.me/?text='+encodeURIComponent(SHARE_TEXT),'_blank')}
+function shareTW(){window.open('https://twitter.com/intent/tweet?text='+encodeURIComponent(SHARE_TEXT),'_blank')}
+function copyLink(){
+  navigator.clipboard.writeText(window.location.href).then(()=>showToast('Link copied!'));
+}
+function showToast(msg){
+  const t=document.getElementById('toast');
+  t.textContent=msg;t.classList.add('show');
+  setTimeout(()=>t.classList.remove('show'),2800);
+}
+
+/* ── TAB SWITCH ── */
+function switchTab(id){
+  document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+  document.getElementById('panel-'+id).classList.add('active');
+  document.getElementById('tab-'+id).classList.add('active');
+}
+
+/* ── SEO: URL PAGE PARAM ── */
+(function(){
+  const p=new URLSearchParams(window.location.search).get('page');
+  if(p){
+    const t=p.replace(/-/g,' ');
+    document.title=t+' | Mystic Numbers';
+    const h1=document.querySelector('h1');
+    if(h1&&!h1.dataset.locked)h1.textContent='✦ '+t;
+  }
+})();
+
+/* ── ENTER KEY SUPPORT ── */
+document.addEventListener('keydown',e=>{
+  if(e.key==='Enter'){
+    const act=document.querySelector('.panel.active');
+    if(act){
+      const btn=act.querySelector('.btn');
+      if(btn)btn.click();
+    }
+  }
+});
 </script>
+</body>
+</html>
