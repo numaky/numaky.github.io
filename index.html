@@ -1,71 +1,119 @@
-<script>
-/* =========================
-   GLOBAL SHARE TEXT
-========================= */
-let CURRENT_SHARE_TEXT = "";
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lucky Number Calculator</title>
 
-/* =========================
-   CHALDEAN MAP
-========================= */
-const CHALDEAN={
+<style>
+body{
+  margin:0;
+  font-family:Arial;
+  background:#020617;
+  color:#fff;
+  text-align:center;
+}
+.container{
+  max-width:700px;
+  margin:auto;
+  padding:20px;
+}
+input,button{
+  width:100%;
+  padding:12px;
+  margin:10px 0;
+  border-radius:8px;
+  border:none;
+}
+button{
+  background:#facc15;
+  font-weight:bold;
+}
+.card{
+  background:#0f172a;
+  padding:20px;
+  margin-top:20px;
+  border-radius:12px;
+}
+.big{
+  font-size:40px;
+  color:#facc15;
+}
+.tag{
+  padding:5px 10px;
+  margin:3px;
+  display:inline-block;
+  border-radius:10px;
+}
+.good{background:green;}
+.bad{background:red;}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+<h1>✨ Lucky Number Calculator</h1>
+
+<input id="name" placeholder="Enter name">
+<input id="dob" type="date">
+
+<button onclick="calculate()">Calculate</button>
+
+<div id="result"></div>
+</div>
+
+<script>
+
+/* GLOBAL */
+let SHARE_TEXT="";
+
+/* CHALDEAN */
+const MAP={
 A:1,B:2,C:3,D:4,E:5,F:8,G:3,H:5,I:1,
 J:1,K:2,L:3,M:4,N:5,O:7,P:8,Q:1,
 R:2,S:3,T:4,U:6,V:6,W:6,X:5,Y:1,Z:7
 };
 
-/* =========================
-   REDUCE
-========================= */
+/* REDUCE */
 function reduce(n){
   while(n>9){
-    n = String(n).split('').reduce((a,b)=>a+Number(b),0);
+    n = n.toString().split('').reduce((a,b)=>a+ +b,0);
   }
   return n;
 }
 
-/* =========================
-   NAME NUMBER
-========================= */
-function getNameNumber(name){
+/* NAME NUMBER */
+function getNumber(name){
   let sum=0;
   name.toUpperCase().replace(/[^A-Z]/g,'')
   .split('')
-  .forEach(l=> sum += CHALDEAN[l] || 0);
+  .forEach(l=> sum+=MAP[l]||0);
   return sum;
 }
 
-/* =========================
-   COMPOUND MEANINGS
-========================= */
-const COMPOUND={
-10:"Wheel of fortune. Destiny with ups and downs.",
-11:"Spiritual insight and intuition.",
-14:"Karmic debt and instability.",
-16:"Sudden downfall and ego lessons.",
-18:"Conflicts and emotional struggles.",
-23:"Royal Star of the Lion — extremely lucky.",
-26:"Financial struggles and partnership issues.",
-32:"Creative success and communication power."
-};
-
-/* =========================
-   ROOT MEANINGS
-========================= */
+/* DATA */
 const ROOT={
-1:"Leadership, independence, ambition.",
-2:"Sensitivity, balance, cooperation.",
-3:"Creativity, communication, joy.",
-4:"Hard work, stability, discipline.",
-5:"Freedom, adaptability, intelligence.",
-6:"Love, family, responsibility.",
-7:"Spirituality, analysis, wisdom.",
-8:"Power, success, money.",
-9:"Compassion, humanitarian nature."
+1:"Leader, ambitious personality",
+2:"Emotional and intuitive",
+3:"Creative and expressive",
+4:"Hardworking and practical",
+5:"Freedom loving",
+6:"Family oriented",
+7:"Spiritual thinker",
+8:"Power and success",
+9:"Humanitarian"
 };
 
-/* =========================
-   FRIENDLY / ENEMY
-========================= */
+const COMPOUND={
+14:"Karmic debt and instability",
+16:"Sudden downfall and ego lessons",
+18:"Conflicts and struggles",
+23:"Very lucky number",
+26:"Financial struggles",
+32:"Creative success"
+};
+
 const FRIENDLY={
 1:[1,2,4,7],2:[1,2,7],3:[3,6,9],
 4:[1,4,8],5:[1,2,3,4,5,6,7,8,9],
@@ -78,112 +126,74 @@ const ENEMY={
 7:[8],8:[2,6],9:[4,7]
 };
 
-/* =========================
-   MAIN CALCULATE FUNCTION
-========================= */
+/* MAIN */
 function calculate(){
 
   const name=document.getElementById("name").value.trim();
   const dob=document.getElementById("dob").value;
 
-  if(!name){
-    alert("Please enter your name");
-    return;
+  if(!name){ alert("Enter name"); return; }
+
+  const num=getNumber(name);
+  const root=reduce(num);
+
+  SHARE_TEXT="My lucky number is "+num+" Check yours: "+window.location.href;
+
+  let html="<div class='card'>";
+  html+="<div class='big'>"+num+"</div>";
+  html+="<p>Root Number: "+root+"</p>";
+
+  if(COMPOUND[num]){
+    html+="<p><b>Compound:</b> "+COMPOUND[num]+"</p>";
   }
 
-  const nameNum=getNameNumber(name);
-  const root=reduce(nameNum);
+  html+="<p><b>Meaning:</b> "+ROOT[root]+"</p>";
 
-  /* SAFE SHARE TEXT */
-  CURRENT_SHARE_TEXT = `My lucky number is ${nameNum} 🔥 Check yours: ${window.location.href}`;
-
-  let html=`<div class="card">`;
-
-  html+=`<div class="big">${nameNum}</div>`;
-  html+=`<p><b>Root Number:</b> ${root}</p>`;
-
-  if(COMPOUND[nameNum]){
-    html+=`<p><b>Compound Meaning:</b> ${COMPOUND[nameNum]}</p>`;
-  }
-
-  html+=`<p><b>Core Meaning:</b> ${ROOT[root]}</p>`;
-
-  /* LIFE PATH */
   if(dob){
     const d=new Date(dob);
     const life=reduce(d.getDate()+(d.getMonth()+1)+d.getFullYear());
-    html+=`<p><b>Life Path Number:</b> ${life}</p>`;
+    html+="<p><b>Life Path:</b> "+life+"</p>";
   }
 
-  html+=`</div>`;
+  html+="</div>";
 
-  /* =========================
-     NAME MEANING SECTION
-  ========================= */
-  html+=`
-  <div class="card">
-    <h3 class="section-title">🔍 What Your Name Means</h3>
+  /* NAME MEANING */
+  html+="<div class='card'>";
+  html+="<h3>What Your Name Means</h3>";
+  html+="<p>"+name+" carries vibration of "+num+"</p>";
+  html+="<p>"+ROOT[root]+"</p>";
+  html+="</div>";
 
-    <p>
-      The name <b>${name}</b> resonates with number <b>${nameNum}</b>,
-      influencing your personality and life direction.
-    </p>
+  /* FRIENDLY */
+  html+="<div class='card'><h3>Friendly</h3>";
+  FRIENDLY[root].forEach(n=> html+="<span class='tag good'>"+n+"</span>");
+  html+="<h3>Enemy</h3>";
+  ENEMY[root].forEach(n=> html+="<span class='tag bad'>"+n+"</span>");
+  html+="</div>";
 
-    <p>
-      This number reflects <b>${ROOT[root]}</b>
-    </p>
-
-    ${
-      COMPOUND[nameNum]
-      ? `<p><b>Special Insight:</b> ${COMPOUND[nameNum]}</p>`
-      : ''
-    }
-
-    <p>
-      Your life path is strongly connected with 
-      <b>${["leadership","creativity","success","spiritual growth"][root%4]}</b>.
-    </p>
-  </div>
-  `;
-
-  /* =========================
-     FRIENDLY / ENEMY
-  ========================= */
-  html+=`<div class="card"><h3>✨ Friendly Numbers</h3>`;
-  FRIENDLY[root].forEach(n=>html+=`<span class="tag good">${n}</span>`);
-  html+=`<h3>⚠ Enemy Numbers</h3>`;
-  ENEMY[root].forEach(n=>html+=`<span class="tag bad">${n}</span>`);
-  html+=`</div>`;
-
-  /* =========================
-     SHARE SECTION
-  ========================= */
-  html+=`
-  <div class="card">
-    <h3 class="section-title">📤 Share Your Result</h3>
-
-    <button onclick="shareWhatsApp()">WhatsApp</button>
-    <button onclick="shareTwitter()">X (Twitter)</button>
-    <button onclick="copyLink()">Copy Link</button>
-  </div>
-  `;
+  /* SHARE */
+  html+="<div class='card'>";
+  html+="<button onclick='wa()'>WhatsApp</button>";
+  html+="<button onclick='tw()'>X</button>";
+  html+="<button onclick='copy()'>Copy Link</button>";
+  html+="</div>";
 
   document.getElementById("result").innerHTML=html;
 }
 
-/* =========================
-   SHARE FUNCTIONS
-========================= */
-function shareWhatsApp(){
-  window.open("https://wa.me/?text="+encodeURIComponent(CURRENT_SHARE_TEXT),"_blank");
+/* SHARE */
+function wa(){
+  window.open("https://wa.me/?text="+encodeURIComponent(SHARE_TEXT));
 }
-
-function shareTwitter(){
-  window.open("https://twitter.com/intent/tweet?text="+encodeURIComponent(CURRENT_SHARE_TEXT),"_blank");
+function tw(){
+  window.open("https://twitter.com/intent/tweet?text="+encodeURIComponent(SHARE_TEXT));
 }
-
-function copyLink(){
+function copy(){
   navigator.clipboard.writeText(window.location.href);
-  alert("Link copied!");
+  alert("Copied!");
 }
+
 </script>
+
+</body>
+</html>
