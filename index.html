@@ -483,6 +483,25 @@ footer a:hover{color:var(--gold)}
 }
 #toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
 
+/* ── DUAL CARD ROW ── */
+.dual-row{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-bottom:18px;align-items:start}
+.dual-row .card{margin-bottom:0}
+@media(max-width:640px){.dual-row{grid-template-columns:1fr}}
+
+/* ── NAME REPRESENTS BOX ── */
+.name-rep-box{
+  background:var(--surface2);
+  border:1px solid rgba(201,168,76,0.15);
+  border-radius:10px;
+  padding:18px 20px;
+  font-size:16px;
+  line-height:1.85;
+  color:var(--text);
+  margin-top:12px;
+  flex:1;
+}
+.name-rep-box b{color:var(--gold-light)}
+
 /* ── INFO TABLE ── */
 .info-table{display:flex;flex-direction:column;gap:0;border:1px solid var(--border);border-radius:10px;overflow:hidden}
 .info-row{
@@ -756,6 +775,57 @@ const LUCKY_NUMS=[3,6,9,10,14,19,21,23,24,27,32,37,41,46];
 const VERY_LUCKY=[23,32,41,46,19,21];
 const UNLUCKY_NUMS=[14,16,18,22,26,29];
 
+/* ── COMPOUND PARAGRAPH DESCRIPTIONS ── */
+const COMPOUND_DESC={
+  1:"This is the number of the Sun — the source of all light and energy. You are destined to lead, to initiate, and to inspire. Others naturally look to you for direction. You possess great willpower and an original mind that rarely follows the crowd. Guard against pride and impatience, as these are the shadows of your great strength.",
+  2:"Ruled by the Moon, you are gifted with sensitivity, intuition, and emotional intelligence. You work best in partnership and thrive when you can bring people together. Your greatest power lies in listening and diplomacy. Be mindful of mood swings and indecision, which are the Moon's lessons for you.",
+  3:"Jupiter blesses this number with optimism, creativity, and a golden tongue. You have a natural ability to communicate, entertain, and inspire. Success often comes through your social connections and creative gifts. Watch for a tendency to scatter your energy — focus is your key to greatness.",
+  4:"The number of structure, foundation, and hard work. You are the builder of the zodiac — patient, reliable, and disciplined. What others dream, you make real through sheer determination. Your challenge is to avoid rigidity and allow life's surprises to reshape your carefully laid plans.",
+  5:"Mercury's child — quick, versatile, and magnetically charming. You crave freedom, variety, and the thrill of new experiences. Change is your natural element. Your challenge is restlessness; when you learn to focus your brilliance, there is no limit to what you can achieve.",
+  6:"Venus bestows on this number grace, love, and a deep sense of responsibility. You are the caretaker — warm, nurturing, and devoted. Beauty, harmony, and family are your natural domains. Beware of sacrificing your own needs too readily in service of others.",
+  7:"The most mystical of all numbers, ruled by Ketu. You are a seeker of hidden truths, blessed with profound intuition and spiritual insight. Solitude is not loneliness for you — it is sacred space for reflection. Your challenge is to trust the unseen world as much as the material one.",
+  8:"Saturn's number — the symbol of power, karma, and ambition. You are here to master the material world, and nothing comes easily to you without effort and perseverance. Yet the rewards you build are lasting. Success comes later in life, but it is substantial and enduring.",
+  9:"Mars gives this number courage, compassion, and a warrior spirit. You are driven by a need to make the world better. Your life is one of service, passion, and transformation. Be mindful of impulsiveness; channel your fire into purposeful action.",
+  10:"A highly fortunate number — the Wheel of Fortune turns in your favour. Success comes after genuine effort and dedication. You possess excellent judgment and rise above obstacles through sheer force of will. Honours and recognition will find you.",
+  11:"This number carries hidden dangers beneath its surface. There is a risk of treachery from trusted associates. Exercise great caution in who you confide in and in contracts or agreements. Awareness is your greatest shield.",
+  12:"The number of the sacrifice — one who gives much and receives little in return, at least for a time. It represents a person who is sometimes victimised by others' schemes. However, this experience builds extraordinary wisdom and inner strength.",
+  13:"A number of upheaval and transformation. What appears to be destruction is often clearing the way for something far greater. You are a force of change — for yourself and for others. Embrace transformation rather than resist it.",
+  14:"A number of constant movement and karmic lessons. It brings both risk and opportunity — often in equal measure. Be cautious with speculation, gambling, or placing too much trust in unstable foundations. Discipline and consistency are your remedies.",
+  15:"A magical number, gifted with great personal magnetism and occult ability. You attract good fortune through the power of your personality and your mysterious charisma. A skilled communicator and influencer, you can persuade almost anyone of almost anything.",
+  16:"Known as the Tower — a warning of sudden and unexpected reversal. Pride and overconfidence can lead to dramatic falls. Humility and careful planning are essential. When approached with wisdom, this number teaches the greatest lessons of all.",
+  17:"The Star of the Magi — one of the luckiest numbers in existence. It promises immortality of name and lasting success. Your work will outlive you. There is a deep spiritual quality to this number that protects and elevates those who carry it.",
+  18:"A number of material conflict and struggle, often arising from the actions of enemies or through deception. However, inner spiritual strength can overcome all opposition. Avoid involvement in the affairs of others; keep your counsel close.",
+  19:"The Prince of Heaven — an exceptionally fortunate number. It brings success, happiness, and great blessings in life. You are well-liked, protected, and guided by a powerful inner light. Good fortune follows you wherever you go.",
+  20:"A number of spiritual awakening and inner calling. It is not particularly strong for worldly matters, but it bestows deep inner wisdom and the ability to inspire others. You may feel called to a spiritual or humanitarian mission.",
+  21:"The Crown of the Magi — success and victory are assured. You will overcome difficulties and achieve great things through your brilliance and perseverance. This is one of the finest numbers for lasting achievement and public recognition.",
+  22:"A number that urges caution — decisions made hastily or without sound judgment may lead to regret. It can bring unrealistic dreams that never quite materialise. Ground your ambitions in practical reality to make the most of what life offers.",
+  23:"The Royal Star of the Lion — one of the most fortunate numbers in Chaldean numerology. It guarantees success, favour from those in power, and remarkable good fortune throughout life. You are blessed with natural charisma and the ability to command.",
+  24:"A highly favourable number for enjoying success, luxuries, and the finer things in life. You will receive help from people in high positions. Gains come through love and relationships. You possess original thoughts, good logic, and eloquent speech. There may be some tendency toward fickle-mindedness.",
+  25:"Success comes through your own strength and hard-won experience. This number indicates someone who learns deeply from life's challenges and eventually rises above them. You are not easily broken, and your wisdom grows with every obstacle you overcome.",
+  26:"A difficult number — partnerships and associations tend to bring loss or disappointment. Business dealings and financial ventures with others should be approached with great caution. Self-reliance is your safest path to security.",
+  27:"A number of authority, command, and personal power. You have a strong, original mind and the ability to lead and inspire. When you commit to a cause greater than yourself, your impact can be truly remarkable.",
+  28:"A bittersweet number — great promise and ability, but loss can come through misplaced trust in those you love or admire. Guard your resources and be selective about who you allow into your inner circle.",
+  29:"A number of uncertainty and unpredictable fortune. Life may feel like a series of highs and lows with little middle ground. Spiritual grounding and a steady inner compass are essential to navigating its turbulent waters.",
+  30:"The number of thoughtfulness and contemplation. Success comes through intellectual pursuits rather than material ambition. You possess a keen mind and the ability to concentrate deeply. However, you tend to work best on your own terms and timeline.",
+  31:"A number of self-reliance bordering on isolation. You prefer your own company and often feel misunderstood by those around you. The challenge is to open yourself to others without losing your precious solitude.",
+  32:"A magical and highly fortunate number, much like 23. Good fortune comes in seemingly miraculous ways. You have a powerful effect on the people around you, and circumstances tend to align in your favour when least expected.",
+  33:"A master number of spiritual power and creative expression at the highest level. You are here to uplift, heal, and inspire on a large scale. Your gifts, when fully developed, have the capacity to touch thousands of lives.",
+  34:"Success and achievement are definitely possible, but only through sustained effort and discipline. There are no shortcuts for this number. The rewards are real and lasting — but they must be earned through dedication.",
+  35:"A number of strong and beneficial partnerships. You are most successful when you work in collaboration with others, as cooperative ventures bring the best results. Choose your allies carefully and protect your partnerships.",
+  36:"A number of high intellect, deep knowledge, and philosophical thinking. You possess an extraordinary mind and may be drawn to academic, scientific, or metaphysical pursuits. Your insights have real value for the world.",
+  37:"Excellent relationships, fortunate friendships, and beneficial partnerships define this number. You attract loyal, high-quality people into your life and are deeply respected by your social circle. Personal happiness is well-starred.",
+  38:"A number of partial success — great beginnings that sometimes fail to reach their full potential. Persistence past the halfway point is your key challenge. Do not abandon promising ventures too early.",
+  39:"Success achieved through creative work, possibly with recognition abroad or far from home. You may be ahead of your time — your ideas and talents are best appreciated by those who can see their true potential.",
+  40:"A number of deep spiritual life and devotion. Though it may limit material success, it offers profound inner richness, wisdom, and peace. You are on a path of service and soul development.",
+  41:"Victory through leadership and original thought. This is a number of great personal power and achievement. You lead from the front, inspire through example, and are capable of building something truly lasting.",
+  42:"A number of scattered energy — many paths begun, few fully completed. The challenge is to choose one direction and commit completely. Discipline and focus will transform this number's potential into genuine achievement.",
+  43:"A number of revolutionary energy and upheaval. Change — sometimes dramatic change — is a constant theme. When this energy is harnessed constructively, it can produce breakthroughs. When resisted, it tends to manifest as disruption.",
+  44:"Material success through sustained, disciplined effort. You are built for the long game. Wealth and achievement are possible, but they demand your full commitment and patience over time.",
+  45:"The wisdom of accumulated experience. You carry the lessons of many lifetimes and possess a mature, balanced perspective that others instinctively respect and seek out.",
+  46:"One of the finest numbers — a triumph of mind, willpower, and determination. You possess the rare combination of intellect, ambition, and the discipline to see your vision through. Great success and leadership await.",
+  47:"A number under strong spiritual protection. Even in times of difficulty, you are watched over and guided. Inner faith and spiritual practice are your most powerful allies throughout life."
+};
+
 /* ── PER-ROOT DETAIL DATA ── */
 const NUM_DETAIL={
   1:{planet:"Sun ☉",   color:"Gold, Orange, Yellow",  day:"Sunday",    friendly:[2,3,9], enemy:[6,7,8], gem:"Ruby",       trait:"You are a natural born leader — confident, driven and independent. You set your own path and rarely follow others."},
@@ -825,30 +895,38 @@ function calcNum(){
 
   let html='';
 
-  /* Card 1 — Core Result */
-  html+=`<div class="card">
-    <h2>⟁ Your Core Numbers</h2>
-    <span class="big-num">${num}</span>
-    <div class="section-label">Chaldean Name Number</div>
-    <div class="result-grid">
-      <div class="result-chip">
-        <div class="chip-label">Root Number</div>
-        <div class="chip-val">${root}</div>
+  /* Cards 1+2 — Parallel layout */
+  const nameDesc = COMPOUND_DESC[num] || COMPOUND_DESC[root] || detail.trait || ROOT_MEAN[root];
+  html+=`<div class="dual-row">
+    <div class="card">
+      <h2>⟁ Your Core Numbers</h2>
+      <span class="big-num">${num}</span>
+      <div class="section-label">Chaldean Name Number</div>
+      <div class="result-grid">
+        <div class="result-chip">
+          <div class="chip-label">Root Number</div>
+          <div class="chip-val">${root}</div>
+        </div>
+        <div class="result-chip">
+          <div class="chip-label">Lucky Status</div>
+          <div class="chip-val" style="font-size:18px">${ls.icon}</div>
+        </div>
       </div>
-      <div class="result-chip">
-        <div class="chip-label">Lucky Status</div>
-        <div class="chip-val" style="font-size:18px">${ls.icon}</div>
+      <div class="luck-badge ${ls.cls}">${ls.txt}</div>
+      ${comp?`<p style="margin-top:10px;color:var(--gold-dim);font-size:14px;font-family:'Cinzel',serif;letter-spacing:0.04em">${comp}</p>`:''}
+    </div>
+    <div class="card">
+      <h2>🔮 What Your Name Represents</h2>
+      <div class="name-rep-box">
+        Hello <b>${name.toUpperCase()}</b>, your name number is <b>${num}</b>.<br/><br/>
+        ${nameDesc}
       </div>
     </div>
-    <div class="luck-badge ${ls.cls}">${ls.txt}</div>
-    ${comp?`<p style="margin-top:12px;color:var(--text-dim);font-size:16px;font-style:italic">"${comp}"</p>`:''}
   </div>`;
 
-  /* Card 2 — What Your Name Represents (right after reveal) */
+  /* Card 3 — Full Detail Table */
   html+=`<div class="card">
-    <h2>🔮 What Your Name Represents</h2>
-    <p style="margin-bottom:16px"><b style="color:var(--gold-light)">${name}</b> corresponds to number <b style="color:var(--gold-light)">${num}</b> (root <b style="color:var(--gold-light)">${root}</b>) in Chaldean numerology.</p>
-    <p style="font-size:17px;margin-bottom:20px;line-height:1.8">${detail.trait||ROOT_MEAN[root]}</p>
+    <h2>📊 Name Number Details</h2>
     <div class="info-table">
       <div class="info-row"><span class="info-label">🪐 Ruling Planet</span><span class="info-val">${detail.planet||'—'}</span></div>
       <div class="info-row"><span class="info-label">💎 Lucky Gemstone</span><span class="info-val">${detail.gem||'—'}</span></div>
@@ -856,8 +934,8 @@ function calcNum(){
       <div class="info-row"><span class="info-label">📅 Lucky Day</span><span class="info-val">${detail.day||'—'}</span></div>
       <div class="info-row"><span class="info-label">✅ Friendly Numbers</span><span class="info-val friendly-nums">${friendlyStr||'—'}</span></div>
       <div class="info-row"><span class="info-label">⚠ Enemy Numbers</span><span class="info-val enemy-nums">${enemyStr||'—'}</span></div>
-      <div class="info-row"><span class="info-label">🔢 Name Meaning</span><span class="info-val">${ROOT_MEAN[root]}</span></div>
-      ${comp?`<div class="info-row"><span class="info-label">📖 Compound Meaning</span><span class="info-val" style="font-style:italic">${comp}</span></div>`:''}
+      <div class="info-row"><span class="info-label">🔢 Root Meaning</span><span class="info-val">${ROOT_MEAN[root]}</span></div>
+      ${comp?`<div class="info-row"><span class="info-label">📖 Compound Symbol</span><span class="info-val" style="font-style:italic;color:var(--text-dim)">${comp}</span></div>`:''}
     </div>
   </div>`;
 
