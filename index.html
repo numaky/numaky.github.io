@@ -829,6 +829,21 @@ function calcNum(){
     <p style="margin-top:8px;color:var(--text-dim)">This number shapes your personality, opportunities, and the energy you project to the world. ${ROOT_MEAN[root]}</p>
   </div>`;
 
+  /* Card 3b — What Your Name Represents */
+  html+=`<div class="card">
+    <h2>🔮 What Your Name Represents</h2>
+    <p><b style="color:var(--gold-light)">${name}</b> corresponds to the number <b style="color:var(--gold-light)">${num}</b> in Chaldean numerology.</p>
+    <div class="meaning-row" style="margin-top:14px">
+      <div class="mr-num">${num}</div>
+      <div class="mr-text">
+        ${comp?`<b style="color:var(--text)">${comp}</b><br/>`:''}
+        ${ROOT_MEAN[root]}
+        <br/><span style="font-size:14px;color:var(--text-dim);margin-top:4px;display:block">This vibration influences your personality, the opportunities you attract, and your overall life direction.</span>
+      </div>
+    </div>
+    ${dob?`<p style="margin-top:12px;font-size:15px;color:var(--text-dim)">Combined with your Life Path, these numbers form the core blueprint of your cosmic identity.</p>`:''}
+  </div>`;
+
   /* Card 4 — Suggestions */
   const sugs=smartSuggest(name);
   if(sugs.length){
