@@ -1,20 +1,9 @@
 <script>
 
 /* =========================
-   SAFE SEO (NO BREAK)
+   RUN AFTER PAGE LOAD (CRITICAL FIX)
 ========================= */
-(function(){
-  const params = new URLSearchParams(window.location.search);
-  const page = params.get("page");
-
-  if(page){
-    const title = page.replace(/-/g," ");
-    document.title = title + " | Lucky Calculator";
-
-    const h1 = document.querySelector("h1");
-    if(h1) h1.innerText = "✨ " + title;
-  }
-})();
+window.onload = function(){
 
 /* =========================
    GLOBAL
@@ -35,7 +24,7 @@ R:2,S:3,T:4,U:6,V:6,W:6,X:5,Y:1,Z:7
 ========================= */
 function reduce(n){
   while(n>9){
-    n = n.toString().split('').reduce((a,b)=>a+ +b,0);
+    n = n.toString().split('').reduce(function(a,b){ return a + Number(b); },0);
   }
   return n;
 }
@@ -44,7 +33,7 @@ function getNumber(name){
   let sum=0;
   name.toUpperCase().replace(/[^A-Z]/g,'')
   .split('')
-  .forEach(l=> sum+=MAP[l]||0);
+  .forEach(function(l){ sum+=MAP[l]||0; });
   return sum;
 }
 
@@ -65,7 +54,7 @@ const ROOT={
 
 const COMPOUND={
 14:"Karmic debt and instability.",
-16:"Sudden downfall and life lessons.",
+16:"Sudden downfall and lessons.",
 18:"Conflicts and struggles.",
 23:"Very lucky number.",
 26:"Financial struggles.",
@@ -76,27 +65,26 @@ const LUCKY=[23,32,41,46];
 const UNLUCKY=[14,16,26];
 
 /* =========================
-   SMART CORRECTION
+   SMART SUGGESTIONS
 ========================= */
 function smartSuggestions(name){
   const adds=["a","e","i","o","u","h","y","n"];
   let res=[];
 
   for(let i=0;i<adds.length;i++){
-    let n=name+adds[i];
-    let num=getNumber(n);
-    if(LUCKY.includes(num)){
-      res.push({name:n,number:num});
+    let newName=name+adds[i];
+    let num=getNumber(newName);
+    if(LUCKY.indexOf(num)!==-1){
+      res.push({name:newName,number:num});
     }
   }
-
   return res.slice(0,5);
 }
 
 /* =========================
-   MAIN
+   MAIN FUNCTION
 ========================= */
-function calculate(){
+window.calculate = function(){
 
   const name=document.getElementById("name").value.trim();
   const dob=document.getElementById("dob").value;
@@ -110,81 +98,79 @@ function calculate(){
 
   let html="";
 
-  /* RESULT */
-  html+=`<div class="card">
-    <div class="big">${num}</div>
-    <p><b>Root Number:</b> ${root}</p>
-    ${COMPOUND[num]?`<p>${COMPOUND[num]}</p>`:""}
-    <p>${ROOT[root]}</p>
-  </div>`;
+  html+="<div class='card'>";
+  html+="<div class='big'>"+num+"</div>";
+  html+="<p><b>Root Number:</b> "+root+"</p>";
+
+  if(COMPOUND[num]){
+    html+="<p>"+COMPOUND[num]+"</p>";
+  }
+
+  html+="<p>"+ROOT[root]+"</p>";
+  html+="</div>";
 
   /* NAME MEANING */
-  html+=`<div class="card">
-    <h3>🔍 What Your Name Represents</h3>
-    <p><b>${name}</b> corresponds to number <b>${num}</b>.</p>
-    <p>${ROOT[root]}</p>
-    <p>This influences personality, success and life direction.</p>
-  </div>`;
+  html+="<div class='card'>";
+  html+="<h3>🔍 What Your Name Represents</h3>";
+  html+="<p><b>"+name+"</b> corresponds to number <b>"+num+"</b>.</p>";
+  html+="<p>"+ROOT[root]+"</p>";
+  html+="<p>This influences your personality and life direction.</p>";
+  html+="</div>";
 
   /* LUCK */
-  html+=`<div class="card"><h3>✨ Lucky Status</h3>`;
-  if(LUCKY.includes(num)){
-    html+=`<p style="color:lightgreen">Very Lucky</p>`;
-  } else if(UNLUCKY.includes(num)){
-    html+=`<p style="color:red">Not Lucky</p>`;
+  html+="<div class='card'><h3>✨ Lucky Status</h3>";
+  if(LUCKY.indexOf(num)!==-1){
+    html+="<p style='color:lightgreen'>Very Lucky</p>";
+  } else if(UNLUCKY.indexOf(num)!==-1){
+    html+="<p style='color:red'>Not Lucky</p>";
   } else {
-    html+=`<p>Neutral</p>`;
+    html+="<p>Neutral</p>";
   }
-  html+=`</div>`;
+  html+="</div>";
 
   /* SUGGESTIONS */
   const sug=smartSuggestions(name);
   if(sug.length){
-    html+=`<div class="card"><h3>🔧 Lucky Name Suggestions</h3>`;
-    sug.forEach(s=> html+=`<p>${s.name} → ${s.number}</p>`);
-    html+=`</div>`;
+    html+="<div class='card'><h3>🔧 Lucky Name Suggestions</h3>";
+    for(let i=0;i<sug.length;i++){
+      html+="<p>"+sug[i].name+" → "+sug[i].number+"</p>";
+    }
+    html+="</div>";
   }
 
   /* LIFE PATH */
   if(dob){
     const d=new Date(dob);
     const life=reduce(d.getDate()+(d.getMonth()+1)+d.getFullYear());
-    html+=`<div class="card"><p><b>Life Path:</b> ${life}</p></div>`;
+    html+="<div class='card'><p><b>Life Path:</b> "+life+"</p></div>";
   }
 
   /* SHARE */
-  html+=`<div class="card">
-    <button onclick="wa()">WhatsApp</button>
-    <button onclick="tw()">X</button>
-    <button onclick="copy()">Copy Link</button>
-  </div>`;
-
-  /* SIMPLE SEO TEXT */
-  html+=`<div class="card">
-    <h3>About Number ${num}</h3>
-    <p>
-    Number ${num} represents ${ROOT[root].toLowerCase()} in numerology.
-    It affects your personality and life journey.
-    </p>
-  </div>`;
+  html+="<div class='card'>";
+  html+="<button onclick='wa()'>WhatsApp</button>";
+  html+="<button onclick='tw()'>X</button>";
+  html+="<button onclick='copyLink()'>Copy Link</button>";
+  html+="</div>";
 
   document.getElementById("result").innerHTML=html;
-}
+};
 
 /* =========================
-   SHARE
+   SHARE FUNCTIONS
 ========================= */
-function wa(){
+window.wa=function(){
   window.open("https://wa.me/?text="+encodeURIComponent(SHARE_TEXT));
-}
+};
 
-function tw(){
+window.tw=function(){
   window.open("https://twitter.com/intent/tweet?text="+encodeURIComponent(SHARE_TEXT));
-}
+};
 
-function copy(){
+window.copyLink=function(){
   navigator.clipboard.writeText(window.location.href);
   alert("Copied!");
-}
+};
+
+}; // END window.onload
 
 </script>
