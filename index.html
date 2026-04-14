@@ -483,6 +483,34 @@ footer a:hover{color:var(--gold)}
 }
 #toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
 
+/* ── INFO TABLE ── */
+.info-table{display:flex;flex-direction:column;gap:0;border:1px solid var(--border);border-radius:10px;overflow:hidden}
+.info-row{
+  display:flex;align-items:flex-start;gap:12px;
+  padding:11px 16px;
+  border-bottom:1px solid rgba(201,168,76,0.08);
+  font-size:16px;
+  transition:background 0.2s;
+}
+.info-row:last-child{border-bottom:none}
+.info-row:hover{background:rgba(201,168,76,0.04)}
+.info-label{
+  min-width:170px;
+  font-family:'Cinzel',serif;
+  font-size:12px;
+  letter-spacing:0.06em;
+  color:var(--text-dim);
+  padding-top:3px;
+  flex-shrink:0;
+}
+.info-val{color:var(--text);line-height:1.5}
+.friendly-nums{color:#6fda6f;font-family:'Cinzel',serif;font-weight:600;letter-spacing:0.1em}
+.enemy-nums{color:#e07070;font-family:'Cinzel',serif;font-weight:600;letter-spacing:0.1em}
+@media(max-width:480px){
+  .info-label{min-width:140px;font-size:11px}
+  .info-row{padding:9px 12px}
+}
+
 /* ── AD PLACEHOLDER ── */
 .ad-slot{
   background:rgba(201,168,76,0.03);
@@ -531,7 +559,7 @@ footer a:hover{color:var(--gold)}
 
     <div class="field">
       <label>Your Full Name</label>
-      <input type="text" id="num-name" placeholder="e.g. Mohammed Al Rashid" autocomplete="off"/>
+      <input type="text" id="num-name" placeholder="e.g. Alexander Stone" autocomplete="off"/>
     </div>
     <div class="field">
       <label>Date of Birth <small style="font-size:11px;color:var(--text-dim)">(optional)</small></label>
@@ -728,6 +756,19 @@ const LUCKY_NUMS=[3,6,9,10,14,19,21,23,24,27,32,37,41,46];
 const VERY_LUCKY=[23,32,41,46,19,21];
 const UNLUCKY_NUMS=[14,16,18,22,26,29];
 
+/* ── PER-ROOT DETAIL DATA ── */
+const NUM_DETAIL={
+  1:{planet:"Sun ☉",   color:"Gold, Orange, Yellow",  day:"Sunday",    friendly:[2,3,9], enemy:[6,7,8], gem:"Ruby",       trait:"You are a natural born leader — confident, driven and independent. You set your own path and rarely follow others."},
+  2:{planet:"Moon ☽",  color:"White, Silver, Cream",  day:"Monday",    friendly:[1,3,9], enemy:[4,7,8], gem:"Pearl / Moonstone", trait:"Gentle, intuitive and deeply empathetic. You value harmony and work best in cooperation with others."},
+  3:{planet:"Jupiter ♃",color:"Yellow, Purple, Violet",day:"Thursday", friendly:[1,2,9], enemy:[5,6],   gem:"Yellow Sapphire",   trait:"Creative, optimistic and highly communicative. You inspire others with your enthusiasm and wit."},
+  4:{planet:"Rahu ☊",  color:"Blue, Electric Blue",   day:"Sunday",    friendly:[1,8],   enemy:[2,3,9], gem:"Hessonite",  trait:"Practical, disciplined and hardworking. You build solid foundations and earn success through persistence."},
+  5:{planet:"Mercury ☿",color:"Green, Light Grey",    day:"Wednesday", friendly:[1,3,6], enemy:[4,7],   gem:"Emerald",    trait:"Quick-witted, versatile and adventurous. You adapt to any situation and thrive on variety and new experiences."},
+  6:{planet:"Venus ♀", color:"Pink, Light Blue, White",day:"Friday",   friendly:[3,5,9], enemy:[1,4,8], gem:"Diamond / White Sapphire", trait:"Loving, responsible and charming. You have a natural gift for creating beauty and nurturing those around you."},
+  7:{planet:"Ketu ☋",  color:"Grey, Violet, Purple",  day:"Monday",    friendly:[2,6],   enemy:[1,3,8], gem:"Cat’s Eye",  trait:"Deeply spiritual and analytical. You seek inner truth, prefer solitude to reflect, and possess unusual wisdom."},
+  8:{planet:"Saturn ♄",color:"Black, Dark Blue, Indigo",day:"Saturday",friendly:[4,5],   enemy:[1,6,9], gem:"Blue Sapphire",  trait:"Ambitious, powerful and resilient. You are built for long-term success — though your path often demands sacrifice."},
+  9:{planet:"Mars ♂",  color:"Red, Crimson, Pink",    day:"Tuesday",   friendly:[1,2,3], enemy:[4,7,8], gem:"Red Coral",  trait:"Courageous, passionate and humanitarian. You fight for what is right and leave a lasting impact on the world."}
+};
+
 function reduce(n){
   while(n>9){n=String(n).split('').reduce((a,b)=>a+ +b,0)}
   return n;
@@ -778,6 +819,10 @@ function calcNum(){
 
   SHARE_TEXT=`My Chaldean number is ${num} (${ls.icon}) — discover yours at ${window.location.href}`;
 
+  const detail=NUM_DETAIL[root]||{};
+  const friendlyStr=(detail.friendly||[]).join(', ');
+  const enemyStr=(detail.enemy||[]).join(', ');
+
   let html='';
 
   /* Card 1 — Core Result */
@@ -797,15 +842,32 @@ function calcNum(){
     </div>
     <div class="luck-badge ${ls.cls}">${ls.txt}</div>
     ${comp?`<p style="margin-top:12px;color:var(--text-dim);font-size:16px;font-style:italic">"${comp}"</p>`:''}
-    <p style="margin-top:10px;font-size:17px">${ROOT_MEAN[root]}</p>
   </div>`;
 
-  /* Card 2 — Life Path */
+  /* Card 2 — What Your Name Represents (right after reveal) */
+  html+=`<div class="card">
+    <h2>🔮 What Your Name Represents</h2>
+    <p style="margin-bottom:16px"><b style="color:var(--gold-light)">${name}</b> corresponds to number <b style="color:var(--gold-light)">${num}</b> (root <b style="color:var(--gold-light)">${root}</b>) in Chaldean numerology.</p>
+    <p style="font-size:17px;margin-bottom:20px;line-height:1.8">${detail.trait||ROOT_MEAN[root]}</p>
+    <div class="info-table">
+      <div class="info-row"><span class="info-label">🪐 Ruling Planet</span><span class="info-val">${detail.planet||'—'}</span></div>
+      <div class="info-row"><span class="info-label">💎 Lucky Gemstone</span><span class="info-val">${detail.gem||'—'}</span></div>
+      <div class="info-row"><span class="info-label">🎨 Lucky Colours</span><span class="info-val">${detail.color||'—'}</span></div>
+      <div class="info-row"><span class="info-label">📅 Lucky Day</span><span class="info-val">${detail.day||'—'}</span></div>
+      <div class="info-row"><span class="info-label">✅ Friendly Numbers</span><span class="info-val friendly-nums">${friendlyStr||'—'}</span></div>
+      <div class="info-row"><span class="info-label">⚠ Enemy Numbers</span><span class="info-val enemy-nums">${enemyStr||'—'}</span></div>
+      <div class="info-row"><span class="info-label">🔢 Name Meaning</span><span class="info-val">${ROOT_MEAN[root]}</span></div>
+      ${comp?`<div class="info-row"><span class="info-label">📖 Compound Meaning</span><span class="info-val" style="font-style:italic">${comp}</span></div>`:''}
+    </div>
+  </div>`;
+
+  /* Card 3 — Life Path */
   if(dob){
     const d=new Date(dob);
     const lpRaw=d.getDate()+(d.getMonth()+1)+d.getFullYear();
     const lp=reduce(lpRaw);
     const lpLS=luckStatus(lp);
+    const lpDetail=NUM_DETAIL[lp]||{};
     html+=`<div class="card">
       <h2>🌙 Life Path Number</h2>
       <div class="result-grid">
@@ -818,31 +880,10 @@ function calcNum(){
           <div class="chip-val" style="font-size:18px">${lpLS.icon}</div>
         </div>
       </div>
-      <p style="margin-top:8px;font-size:17px">${ROOT_MEAN[lp]}</p>
+      <p style="margin-top:10px;font-size:17px">${ROOT_MEAN[lp]}</p>
+      <p style="margin-top:8px;font-size:15px;color:var(--text-dim)">${lpDetail.trait||''}</p>
     </div>`;
   }
-
-  /* Card 3 — Name Meaning */
-  html+=`<div class="card">
-    <h2>🔍 Name Vibration</h2>
-    <p><b style="color:var(--gold-light)">${name}</b> vibrates at number <b style="color:var(--gold-light)">${num}</b>.</p>
-    <p style="margin-top:8px;color:var(--text-dim)">This number shapes your personality, opportunities, and the energy you project to the world. ${ROOT_MEAN[root]}</p>
-  </div>`;
-
-  /* Card 3b — What Your Name Represents */
-  html+=`<div class="card">
-    <h2>🔮 What Your Name Represents</h2>
-    <p><b style="color:var(--gold-light)">${name}</b> corresponds to the number <b style="color:var(--gold-light)">${num}</b> in Chaldean numerology.</p>
-    <div class="meaning-row" style="margin-top:14px">
-      <div class="mr-num">${num}</div>
-      <div class="mr-text">
-        ${comp?`<b style="color:var(--text)">${comp}</b><br/>`:''}
-        ${ROOT_MEAN[root]}
-        <br/><span style="font-size:14px;color:var(--text-dim);margin-top:4px;display:block">This vibration influences your personality, the opportunities you attract, and your overall life direction.</span>
-      </div>
-    </div>
-    ${dob?`<p style="margin-top:12px;font-size:15px;color:var(--text-dim)">Combined with your Life Path, these numbers form the core blueprint of your cosmic identity.</p>`:''}
-  </div>`;
 
   /* Card 4 — Suggestions */
   const sugs=smartSuggest(name);
